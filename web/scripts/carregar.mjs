@@ -32,6 +32,8 @@ const TABELAS = ['macro', 'parametros', 'metricas_modelos', 'rotas', 'rota_empre
 const local = /localhost|127\.0\.0\.1/.test(process.env.DATABASE_URL);
 const cliente = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: local ? false : { rejectUnauthorized: false } });
 await cliente.connect();
+// o Supabase corta comandos longos (statement_timeout); a carga do painel leva alguns minutos
+await cliente.query("set statement_timeout = 0");
 console.log('Conectado. Criando/atualizando o esquema...');
 await cliente.query(fs.readFileSync(path.join(raiz, 'supabase', 'schema.sql'), 'utf8'));
 
