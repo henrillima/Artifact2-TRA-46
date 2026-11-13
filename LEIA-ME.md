@@ -1,8 +1,8 @@
 # ARTEF2 · TRA-46 · Grupo 02 — previsão e cenários de tarifas aéreas
 
-Site com previsão da tarifa média, choque de custos (QAV e câmbio), simulação de fusões (HHI e guia do CADE)
-e choques de demanda, em cima dos microdados de tarifas domésticas da ANAC. O ARTEF1 (dashboard do Karbage)
-é a base: mesma limpeza, mesmos totais.
+Site com as análises do ARTEF1 (panorama, casos reais, sazonalidade, faixas de preço, companhias, rotas, aeroportos
+e método) refeitas para a base completa, mais o que o ARTEF2 acrescenta: previsão da tarifa média, choque de custos
+(QAV e câmbio), simulação de fusões (HHI e guia do CADE) e choques de demanda. Mesma limpeza e mesmos totais do ARTEF1.
 
 ```
 artef2/
@@ -71,6 +71,7 @@ depois disso, atualize esse arquivo antes (séries 433 e 3698 do Banco Central; 
 | Script | Entrada | Saída |
 |---|---|---|
 | `agregar.py` | `.zip` da ANAC | `dados/painel.parquet` (rota × companhia × mês), `qualidade.csv` |
+| `analises.py` | `.zip` da ANAC | as oito análises do ARTEF1 para a base completa (`web/public/analises/index.html`); front-end em `analises/` |
 | `series.py` | painel + `ext/` | séries mensais de Brasil, companhias e rotas; tabela de rotas |
 | `previsao.py` | séries | validação de 10 modelos em 3 origens, previsões de 18 meses com intervalos |
 | `econometria.py` | painel | repasse do QAV, elasticidade-preço da demanda (VI), HHI × tarifa |

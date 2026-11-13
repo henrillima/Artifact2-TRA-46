@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const itens = [
-  ['/', 'Visão geral'], ['/previsao', 'Previsão'], ['/custos', 'Custos'], ['/fusao', 'Fusões'],
+  ['/', 'Visão geral'], ['/analises', 'Análises'], ['/previsao', 'Previsão'], ['/custos', 'Custos'], ['/fusao', 'Fusões'],
   ['/demanda', 'Demanda'], ['/segmentos', 'Segmentos'], ['/cenarios', 'Cenários'], ['/metodo', 'Método'],
 ];
 

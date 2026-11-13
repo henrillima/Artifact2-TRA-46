@@ -8,6 +8,7 @@ import { NOMES_MODELOS } from '@/lib/hooks';
 import { fmtMes, fmtN, fmtP, fmtR } from '@/lib/sim';
 
 const CARTOES = [
+  ['/analises', 'Análises da base completa', 'Tudo o que o ARTEF1 tinha (panorama, casos reais, sazonalidade, faixas de preço, companhias, rotas, aeroportos e método), agora de 2015 a 2026, com a Avianca separada e o caso da saída dela em 2019.'],
   ['/previsao', 'Previsão da tarifa', 'Dez modelos (de suavização exponencial a redes neurais) competem em validação fora da amostra; escolha Brasil, companhia ou qualquer rota.'],
   ['/custos', 'Choque de custos', 'Mexa no querosene e no câmbio e veja o repasse para a tarifa e a reação da demanda, com elasticidades estimadas nos dados.'],
   ['/fusao', 'Fusão e concentração', 'Junte duas companhias e veja o HHI por rota, o enquadramento no guia do CADE e o efeito previsto na tarifa.'],
@@ -41,9 +42,9 @@ export default function Inicio() {
         <div className="text-sm uppercase tracking-wider text-sky-200">ARTEF2 · TRA-46 Economia Aplicada · ITA · Grupo 02</div>
         <h1 className="mt-2 text-3xl font-bold md:text-4xl">Quanto vai custar voar no Brasil, e o que muda se o cenário mudar?</h1>
         <p className="mt-3 max-w-3xl text-slate-200">
-          Uma ferramenta de previsão e simulação construída sobre {par ? `os microdados de tarifas aéreas domésticas da ANAC de ${fmtMes(par.primeiro_mes_dados)} a ${fmtMes(par.ultimo_mes_dados)}` : 'os microdados de tarifas aéreas domésticas da ANAC'},
-          com valores em reais de {par ? fmtMes(par.mes_base_real) : '…'}. Modelos de aprendizado de máquina para prever, econometria para medir repasses e elasticidades,
-          e simuladores para explorar cenários de custos, fusões e choques de demanda.
+          As análises do ARTEF1 continuam aqui, agora para a base inteira, e o ARTEF2 acrescenta previsão e simulação de cenários. Tudo sobre {par ? `os microdados de tarifas aéreas domésticas da ANAC de ${fmtMes(par.primeiro_mes_dados)} a ${fmtMes(par.ultimo_mes_dados)}` : 'os microdados de tarifas aéreas domésticas da ANAC'},
+          com valores em reais de {par ? fmtMes(par.mes_base_real) : '…'}: aprendizado de máquina para prever, econometria para medir repasses e elasticidades,
+          e simuladores de custos, fusões e choques de demanda.
         </p>
       </section>
       <Estado carregando={!serie.length && !erro} erro={erro} />
@@ -63,8 +64,12 @@ export default function Inicio() {
       )}
       <div className="grid gap-4 md:grid-cols-3">
         {CARTOES.map(([h, t, d]) => (
-          <Link key={h} href={h} className="cartao transition hover:-translate-y-0.5 hover:shadow-md">
-            <div className="font-semibold text-ceu">{t} →</div><p className="mt-1 text-sm text-slate-600">{d}</p>
+          <Link key={h} href={h} className={`cartao transition hover:-translate-y-0.5 hover:shadow-md ${h === '/analises' ? 'md:col-span-3' : ''}`}>
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-semibold text-ceu">{t} →</span>
+              <span className={`rounded px-2 py-0.5 text-xs ${h === '/analises' ? 'bg-slate-100 text-slate-600' : 'bg-orange-100 text-orange-700'}`}>{h === '/analises' ? 'do ARTEF1, ampliado' : 'novo no ARTEF2'}</span>
+            </div>
+            <p className="mt-1 text-sm text-slate-600">{d}</p>
           </Link>
         ))}
       </div>

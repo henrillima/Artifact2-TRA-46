@@ -1,0 +1,142 @@
+﻿arquivo;codificacao;cabecalho;linhas_brutas;tarifa_com_virgula;tarifa_com_ponto;tarifa_ponto_e_virgula;tarifa_nao_numerica;assentos_nao_numerico;periodo_diverge;tarifa_le_zero;assentos_le_zero;origem_igual_destino;codigo_icao_anomalo;linhas_validas;tarifa_min;tarifa_max;assentos_soma
+201501;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";451427;451427;0;0;0;0;0;0;0;0;0;451427;16,92;14973,9;4706746,0
+201502;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";385402;385402;0;0;0;0;0;0;0;0;0;385402;27,9;8461,37;4035571,0
+201503;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";517426;517426;0;0;0;0;0;0;0;0;0;517426;27,0;5677,83;5382796,0
+201504;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";442719;442719;0;0;0;0;0;0;0;0;0;442719;28,1;4629,08;4258956,0
+201505;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";488468;488468;0;0;0;0;0;0;0;0;0;488468;19,0;5093,9;4244397,0
+201506;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";470624;470624;0;0;0;0;0;0;0;0;0;470624;30,0;4610,37;3892446,0
+201507;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";471510;471510;0;0;0;0;0;0;0;0;0;471510;19,9;5262,77;3908848,0
+201508;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";410719;410719;0;0;0;0;0;0;0;0;0;410719;19,9;4882,63;3851621,0
+201509;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";517859;517859;0;0;0;0;0;0;0;0;0;517859;27,0;5132,33;3674112,0
+201510;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";451894;451894;0;0;0;0;0;0;0;0;0;451894;27,9;9975,0;3737626,0
+201511;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";522958;522958;0;0;0;0;0;0;0;0;0;522958;27,0;11259,9;4235254,0
+201512;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";376461;376461;0;0;0;0;0;0;0;0;0;376461;30,52;12240,0;3286404,0
+201601;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";450899;450899;0;0;0;0;0;0;0;0;0;450899;36,9;5232,0;4106748,0
+201602;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";385870;385870;0;0;0;0;0;0;0;0;0;385870;39,0;5105,18;3384919,0
+201603;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";389799;389799;0;0;0;0;0;0;0;0;0;389799;31,9;4947,25;3828383,0
+201604;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";390701;390701;0;0;0;0;0;0;0;0;0;390701;39,9;4548,12;3483048,0
+201605;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";416818;416818;0;0;0;0;0;0;0;0;0;416818;31,1;5416,0;3495768,0
+201606;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";399470;399470;0;0;0;0;0;0;0;0;0;399470;39,9;5180,9;3487816,0
+201607;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";349297;349297;0;0;0;0;0;0;0;0;0;349297;27,14;4521,68;3245316,0
+201608;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";372939;372939;0;0;0;0;0;0;0;0;0;372939;41,9;4019,12;3311879,0
+201609;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";400747;400747;0;0;0;0;0;0;0;0;0;400747;37,45;4129,96;2916480,0
+201610;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";374991;374991;0;0;0;0;0;0;0;0;0;374991;35,9;4863,9;3143825,0
+201611;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";375560;375560;0;0;0;0;0;0;0;0;0;375560;28,48;5245,9;3398252,0
+201612;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";327202;327202;0;0;0;0;0;0;0;0;0;327202;17,22;3900,44;2839457,0
+201701;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";319640;278907;0;0;0;0;0;0;0;0;0;319640;32,26;4484,49;3301463,0
+201702;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";267057;221908;0;0;0;0;0;0;0;0;0;267057;17,61;3310,17;2957363,0
+201703;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";344798;293380;0;0;0;0;0;0;0;0;0;344798;15,98;3951,0;3558829,0
+201704;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";269977;226184;0;0;0;0;0;0;0;0;0;269977;43,9;4450,03;2974308,0
+201705;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";386152;332152;0;0;0;0;0;0;0;0;0;386152;35,0;3641,85;3384135,0
+201706;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";425856;380222;0;0;0;0;0;0;0;0;0;425856;35,9;3433,9;3379755,0
+201707;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";427531;370069;0;0;0;0;0;0;0;0;0;427531;35,9;3235,8;3427314,0
+201708;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";443428;380616;0;0;0;0;0;0;0;0;0;443428;37,05;3840,0;3440806,0
+201709;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";507113;433939;0;0;0;0;0;0;0;0;0;507113;19,3;3600,0;3419982,0
+201710;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";491775;421763;0;0;0;0;0;0;0;0;0;491775;39,9;3422,8;3556089,0
+201711;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";476007;413586;0;0;0;0;0;0;0;0;0;476007;27,9;3361,8;3574510,0
+201712;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";394731;394731;0;0;0;0;0;0;0;0;0;394731;32,0;3253,9;2745175,0
+201801;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";417847;360987;0;0;0;0;0;0;0;0;0;417847;39,0;3000,9;3366209,0
+201802;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";326525;276062;0;0;0;0;0;0;0;0;0;326525;39,0;3339,0;2709722,0
+201803;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";427546;354941;0;0;0;0;0;0;0;0;0;427546;40,83;3039,0;3142734,0
+201804;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";461185;396092;0;0;0;0;0;0;0;0;0;461185;30,0;3419,8;3434089,0
+201805;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";501723;430285;0;0;0;0;0;0;0;0;0;501723;40,9;3622,0;3423203,0
+201806;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";455061;382319;0;0;0;0;0;0;0;0;0;455061;29,9;3431,8;3549779,0
+201807;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";463398;397527;0;0;0;0;0;0;0;0;0;463398;30,0;3000,91;3218317,0
+201808;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";433722;369751;0;0;0;0;0;0;0;0;0;433722;46,8;3121,9;3066826,0
+201809;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";384219;384219;0;0;0;0;0;0;0;0;0;384219;40,41;3659,0;3235904,0
+201810;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";458070;383405;0;0;0;0;0;0;0;0;0;458070;21,4;3489,9;3242480,0
+201811;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";444956;375925;0;0;0;0;0;0;0;0;0;444956;43,8;3000,92;3589678,0
+201812;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";338874;278618;0;0;0;0;0;0;0;0;0;338874;47,78;3500,92;2498232,0
+201901;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";418098;418098;0;0;0;0;0;0;0;0;0;418098;40,18;5507,41;3496805,0
+201902;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";378039;378039;0;0;0;0;0;0;0;0;0;378039;41,06;3500,9;2701915,0
+201903;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";364860;309758;0;0;0;0;0;0;0;0;0;364860;40,38;4106,82;3228948,0
+201904;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";340396;340396;0;0;0;0;0;0;0;0;0;340396;23,38;3500,9;2639828,0
+201905;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";301171;301171;0;0;0;0;0;0;0;0;0;301171;42,66;2999,0;3090420,0
+201906;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";295205;295205;0;0;0;0;0;0;0;0;0;295205;42,02;3000,9;3248294,0
+201907;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";345752;345752;0;0;0;0;0;0;0;0;0;345752;29,9;4381,3;3247320,0
+201908;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";371294;371294;0;0;0;0;0;0;0;0;0;371294;25,0;3368,9;3438698,0
+201909;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";399647;399647;0;0;0;0;0;0;0;0;0;399647;30,9;2802,18;3427642,0
+201910;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";374037;374037;0;0;0;0;0;0;0;0;0;374037;27,07;3590,01;3387866,0
+201911;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";389310;389310;0;0;0;0;0;0;0;0;0;389310;10,0;3415,9;3986521,0
+201912;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";357355;317239;0;0;0;0;0;0;0;0;0;357355;24,56;3544,89;2585896,0
+202001;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";333796;286933;0;0;0;0;0;0;0;0;0;333796;29,9;3524,9;3400662,0
+202002;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";360126;309788;0;0;0;0;0;0;0;0;0;360126;29,9;4255,81;3006099,0
+202003;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";321318;266997;0;0;0;0;0;0;0;0;0;321318;23,16;3359,71;2075689,0
+202004;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";113864;113864;0;0;0;0;0;0;0;0;0;113864;35,9;2912,16;509942,0
+202005;utf-8;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";107794;88124;0;0;0;0;0;0;0;0;0;107794;40,07;3023,31;461570,0
+202006;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";157742;135367;0;0;0;0;0;0;0;0;0;157742;35,6;3000,9;787037,0
+202007;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";213561;182962;0;0;0;0;0;0;0;0;0;213561;37,17;3997,97;1341775,0
+202008;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";321652;285423;0;0;0;0;0;0;0;0;0;321652;40,05;3363,8;1519742,0
+202009;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";319035;277662;0;0;0;0;0;0;0;0;0;319035;40,02;4326,8;1889955,0
+202010;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";398974;352642;0;0;0;0;0;0;0;0;0;398974;40,15;4711,9;2106124,0
+202011;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";463440;413150;0;0;0;0;0;0;0;0;0;463440;1,0;4423,9;2714050,0
+202012;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";360948;318195;0;0;0;0;0;0;0;0;0;360948;31,41;4488,9;1868805,0
+202101;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";361608;361608;0;0;0;0;0;0;0;0;0;361608;4,56;4711,9;1858809,0
+202102;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";322573;286682;0;0;0;0;0;0;0;0;0;322573;40,09;3890,9;1443330,0
+202103;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";313174;281062;0;0;0;0;0;0;0;0;0;313174;21,9;7315,83;1222017,0
+202104;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";288580;252377;0;0;0;0;0;0;0;0;0;288580;30,82;3500,9;1360092,0
+202105;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";338173;338173;0;0;0;0;0;0;0;0;0;338173;36,9;3931,9;1682224,0
+202106;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";310587;274779;0;0;0;0;0;0;0;0;0;310587;5,94;4997,9;1886100,0
+202107;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";369893;324647;0;0;0;0;0;0;0;0;0;369893;40,05;4469,9;2141195,0
+202108;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";356742;308500;0;0;0;0;0;0;0;0;0;356742;40,11;5223,9;2457962,0
+202109;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";465816;465816;0;0;0;0;0;0;0;0;0;465816;40,21;3412,9;3041819,0
+202110;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";577706;532847;0;0;0;0;0;0;0;0;0;577706;40,04;5032,13;3402952,0
+202111;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";559175;559175;0;0;0;0;0;0;0;0;0;559175;15,0;4476,9;3792823,0
+202112;latin-1;"(coluna sem nome);Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";405734;405734;0;0;0;0;0;0;0;0;0;405734;40,02;4688,06;2421438,0
+202201;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";326633;286691;0;0;0;0;0;0;0;0;0;326633;21,0;3998,9;2113321,0
+202202;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";354411;323226;0;0;0;0;0;0;0;0;0;354411;40,33;4894,9;1837818,0
+202203;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";419885;384426;0;0;0;0;0;0;0;0;0;419885;40,3;4940,9;2078861,0
+202204;latin-1;"(coluna sem nome);Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";365433;365433;0;0;0;0;0;0;0;0;0;365433;40,14;5149,9;2022845,0
+202205;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";404761;404761;0;0;0;0;0;0;0;0;0;404761;40,42;5998,0;2274789,0
+202206;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";406735;406735;0;0;0;0;0;0;0;0;0;406735;40,24;7873,43;2319374,0
+202207;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";381726;381726;0;0;0;0;0;0;0;0;0;381726;41,65;6060,9;1932906,0
+202208;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";402578;402578;0;0;0;0;0;0;0;0;0;402578;40,03;8353,9;2080709,0
+202209;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";426777;386515;0;0;0;0;0;0;0;0;0;426777;40,72;6331,27;2124662,0
+202210;latin-1;"Ano de Referência;Mês de Referência;ICAO Empresa Aérea;ICAO Aeródromo Origem;ICAO Aeródromo Destino;Tarifa-N;Assentos Comercializados";460565;418902;0;0;0;0;0;0;0;0;0;460565;48,0;10151,9;2450901,0
+202211;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";447815;447815;0;0;0;0;0;0;0;0;0;447815;20,0;7820,9;2456623,0
+202212;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";331375;331375;0;0;0;0;0;0;0;0;0;331375;39,9;9573,2;1826543,0
+202301;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";390216;390216;0;0;0;0;0;0;0;0;0;390216;21,98;10958,9;2488754,0
+202302;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";342439;342439;0;0;0;0;0;0;0;0;0;342439;49,89;13149,9;2006356,0
+202303;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";380501;380501;0;0;0;0;0;0;0;0;0;380501;42,29;8547,9;2403804,0
+202304;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";390847;390847;0;0;0;0;0;0;0;0;0;390847;42,0;8300,9;2186616,0
+202305;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";472632;472632;0;0;0;0;0;0;0;0;0;472632;43,9;8400,9;2515306,0
+202306;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";421741;421741;0;0;0;0;0;0;0;0;0;421741;41,52;6281,9;2173649,0
+202307;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";466328;466328;0;0;0;0;0;0;0;0;0;466328;40,58;7299,71;2121394,0
+202308;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";517069;517069;0;0;0;0;0;0;0;0;0;517069;43,98;7494,9;2356280,0
+202309;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";438738;438738;0;0;0;0;0;0;0;0;0;438738;41,32;7307,77;2233603,0
+202310;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";460926;460926;0;0;0;0;0;0;0;0;0;460926;44,44;7104,9;2409736,0
+202311;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";420919;420919;0;0;0;0;0;0;0;0;0;420919;41,16;7047,19;2451230,0
+202312;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";436863;436863;0;0;0;0;0;0;0;0;0;436863;47,0;5976,8;2118045,0
+202401;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";476180;476180;0;0;0;0;0;0;0;0;0;476180;40,38;5797,8;2509953,0
+202402;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";477327;477327;0;0;0;0;0;0;0;0;0;477327;2,05;6418,0;2038622,0
+202403;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";569184;569184;0;0;0;0;0;0;0;0;0;569184;36,35;6123,73;2238778,0
+202404;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";617657;617657;0;0;0;0;0;0;0;0;0;617657;44,85;6091,92;2783969,0
+202405;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";639314;639314;0;0;0;0;0;0;0;0;0;639314;36,84;5901,8;2855645,0
+202406;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";660592;660592;0;0;0;0;0;0;0;0;0;660592;39,88;6244,8;2772277,0
+202407;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";628890;628890;0;0;0;0;0;0;0;0;0;628890;44,78;6251,9;2571702,0
+202408;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";800377;800377;0;0;0;0;0;0;0;0;0;800377;41,23;4942,9;2678301,0
+202409;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";730783;730783;0;0;0;0;0;0;0;0;0;730783;42,99;7018,0;2448716,0
+202410;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";785373;0;514406;0;0;0;0;0;0;0;0;785373;43,0;7178,0;2822128,0
+202411;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";762006;0;710651;0;0;0;0;0;0;0;0;762006;43,69;8829,04;2815293,0
+202412;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";569478;569478;0;0;0;0;0;0;0;0;0;569478;42,41;6920,35;2125583,0
+202501;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";725702;725702;0;0;0;0;0;0;0;0;0;725702;40,71;6598,0;2877862,0
+202502;utf-8;"ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS";714433;714433;0;0;0;0;0;0;0;0;0;714433;49,28;6598,0;2696738,0
+202503;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";701901;0;701901;0;0;0;0;0;0;0;0;701901;50,9;7098,0;3015998,0
+202504;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";786918;0;786918;0;0;0;0;0;0;0;0;786918;50,89;6593,8;2777918,0
+202505;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";797080;0;797080;0;0;0;0;0;0;0;0;797080;50,9;8183,43;3144086,0
+202506;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";663644;0;663644;0;0;0;0;0;0;0;0;663644;43,26;7058,0;2550961,0
+202507;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";627891;0;627891;0;0;0;0;0;0;0;0;627891;48,84;9953,13;2527763,0
+202508;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";633529;0;633529;0;0;0;0;0;0;0;0;633529;41,94;7433,99;2870631,0
+202509;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";679123;0;679123;0;0;0;0;0;0;0;0;679123;50,9;7058,0;2598632,0
+202510;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";813770;0;813770;0;0;0;0;0;0;0;0;813770;50,9;7198,0;2850172,0
+202511;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";899749;0;899749;0;0;0;0;0;0;0;0;899749;38,18;8012,31;3648451,0
+202512;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";668554;0;668554;0;0;0;0;0;0;0;0;668554;48,9;7178,0;2148302,0
+202601;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";789440;789440;0;0;0;0;0;0;0;0;0;789440;54,2;6989,9;2998778,0
+202602;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";636112;636112;0;0;0;0;0;0;0;0;0;636112;63,99;4926,03;2377473,0
+202603;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";844261;844261;0;0;0;0;0;0;0;0;0;844261;52,54;4981,08;2669557,0
+202604;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";819731;819731;0;0;0;0;0;0;0;0;0;819731;67,14;4990,63;2631791,0
+202605;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";868086;868086;0;0;0;0;0;0;0;0;0;868086;51,13;6742,46;2969877,0
+202606;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";882935;882935;0;0;0;0;0;0;0;0;0;882935;63,78;7094,38;2651465,0
+202607;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";863271;863271;0;0;0;0;0;0;0;0;0;863271;64,15;6819,03;2649922,0
+202608;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";818120;818120;0;0;0;0;0;0;0;0;0;818120;75,13;4977,48;2637211,0
+202609;utf-8;"nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;nr_assentos";892505;892505;0;0;0;0;0;0;0;0;0;892505;58,69;6542,8;2551248,0

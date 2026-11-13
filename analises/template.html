@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarifas aéreas domésticas do Brasil: análises</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --f-disp:"Barlow Condensed","Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Barlow","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --bg:#EEF2F7; --surface:#FFFFFF; --ink:#0C1B2E; --muted:#556579; --line:#D1DAE5; --soft:#E7EDF4;
+  --sig:#0A8FA0; --sig-ink:#08707D; --nom:#8391A6; --warn:#DA531A; --cool:#2B77BD; --sun:#F2B705; --focus:#1F5BD6;
+  --tam:#C8102E; --glo:#F26B1D; --azu:#1F5BD6; --one:#7C3AED; --out:#93A1B5;
+  --b1:#A9DADE; --b2:#6FB8C7; --b3:#4290B3; --b4:#2B6899; --b5:#26407C; --b6:#2D2160;
+  --bt1:#0C1B2E; --bt2:#0C1B2E; --bt3:#FFFFFF; --bt4:#FFFFFF; --bt5:#FFFFFF; --bt6:#FFFFFF;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08131F; --surface:#0E2033; --ink:#E7EEF7; --muted:#96A7BC; --line:#223850; --soft:#132A41;
+    --sig:#36C6D6; --sig-ink:#5ED4E1; --nom:#7F90A8; --warn:#FF7A3D; --cool:#5AA2E8; --sun:#FFCB3D; --focus:#8DB4FF;
+    --tam:#FF5772; --glo:#FF9147; --azu:#6C9BFF; --one:#B794F6; --out:#7D8DA3;
+    --b1:#BDE9EC; --b2:#83CAD6; --b3:#52A8CB; --b4:#3F86C6; --b5:#7A66D8; --b6:#B767D6;
+    --bt1:#08131F; --bt2:#08131F; --bt3:#08131F; --bt4:#08131F; --bt5:#08131F; --bt6:#08131F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08131F; --surface:#0E2033; --ink:#E7EEF7; --muted:#96A7BC; --line:#223850; --soft:#132A41;
+  --sig:#36C6D6; --sig-ink:#5ED4E1; --nom:#7F90A8; --warn:#FF7A3D; --cool:#5AA2E8; --sun:#FFCB3D; --focus:#8DB4FF;
+  --tam:#FF5772; --glo:#FF9147; --azu:#6C9BFF; --one:#B794F6; --out:#7D8DA3;
+  --b1:#BDE9EC; --b2:#83CAD6; --b3:#52A8CB; --b4:#3F86C6; --b5:#7A66D8; --b6:#B767D6;
+  --bt1:#08131F; --bt2:#08131F; --bt3:#08131F; --bt4:#08131F; --bt5:#08131F; --bt6:#08131F;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f-body);-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--f-disp);font-weight:600;line-height:1.05;margin:0;letter-spacing:0}
+p{margin:0}
+a{color:var(--sig-ink)}
+button,select,input{font:inherit;color:inherit}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+@media(max-width:560px){.wrap{padding:0 16px}}
+
+/* ---------- barra superior ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:20px;height:56px}
+.brand{font:600 1.35rem/1 var(--f-disp);white-space:nowrap}
+.brand span{color:var(--sig-ink)}
+#nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+#nav::-webkit-scrollbar{display:none}
+#nav a{font:500 .92rem/1 var(--f-body);color:var(--muted);text-decoration:none;padding:9px 9px;border-radius:999px;white-space:nowrap}
+#nav a:hover{color:var(--ink)}
+#nav a[aria-current="true"]{background:var(--ink);color:var(--bg)}
+#theme{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center}
+#theme svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:700px){.brand{display:none}#nav{margin-left:0}}
+
+/* ---------- seções ---------- */
+section{padding-top:72px}
+section.hero{padding-top:44px}
+.sec-head{max-width:760px;margin-bottom:26px}
+h1{font-size:clamp(2.3rem,6vw,4.2rem);max-width:15em}
+h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.lead{margin-top:16px;max-width:64ch;font-size:1.08rem;color:var(--ink)}
+.lead+.lead{margin-top:10px;color:var(--muted)}
+.rule{border:0;border-top:1px solid var(--line);margin:0}
+.sub{color:var(--muted);margin-top:10px;max-width:64ch}
+.note{color:var(--muted);font-size:.9rem;max-width:80ch;margin-top:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr);gap:34px}}
+@media(min-width:901px){.two.rt2{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+h3{font-size:1.35rem;margin-bottom:6px}
+.h3sub{color:var(--muted);font-size:.93rem;margin-bottom:14px;max-width:60ch}
+
+/* ---------- controles ---------- */
+.ctrl{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin:26px 0 10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:3px}
+.seg button{border:0;background:transparent;color:var(--muted);font:600 .92rem/1 var(--f-body);padding:8px 15px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);font:600 .9rem/1 var(--f-body);padding:8px 13px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.chip[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.chip i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--out)}
+.legend{display:flex;flex-wrap:wrap;gap:2px 14px;margin:6px 0 4px}
+.lg{display:inline-flex;align-items:center;gap:8px;font:500 .9rem/1.2 var(--f-body);color:var(--ink);background:none;border:0;padding:6px 6px;border-radius:8px}
+button.lg{cursor:pointer}
+button.lg[aria-pressed="false"]{opacity:.42}
+.sw{display:inline-block;width:24px;height:0;border-top:3px solid var(--sig)}
+.sw.dash{border-top:3px dashed var(--nom)}
+.sw.band{height:11px;border:0;background:color-mix(in srgb,var(--sig) 26%,transparent);border-radius:3px}
+.sw.box{width:12px;height:12px;border:0;border-radius:3px}
+
+/* ---------- gráficos ---------- */
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;height:auto;overflow:visible;touch-action:pan-y}
+.ax text,.ax-t{font:500 12px/1 var(--f-body);fill:var(--muted)}
+.gl{stroke:var(--line);stroke-width:1}
+.gl.base{stroke:var(--muted);opacity:.55}
+.ytitle{font:500 12px var(--f-body);fill:var(--muted)}
+.note-t{font:600 12.5px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round}
+.note-l{stroke:var(--muted);stroke-width:1}
+.pt{fill:var(--sun);stroke:var(--ink);stroke-width:1.5}
+.xh{stroke:var(--ink);stroke-width:1;opacity:.55}
+.dot{stroke:var(--bg);stroke-width:2}
+#tip{position:fixed;z-index:60;left:0;top:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:9px 12px;border-radius:9px;font-size:13.5px;line-height:1.4;max-width:270px;opacity:0;transition:opacity .08s}
+#tip b{display:block;font:600 1.05rem/1.15 var(--f-disp);margin-bottom:3px}
+#tip .r{display:flex;justify-content:space-between;gap:14px}
+#tip .r span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+#tip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+
+/* ---------- mapa de calor ---------- */
+.heat{display:grid;grid-template-columns:78px repeat(12,minmax(0,1fr));gap:3px;font-variant-numeric:tabular-nums}
+.heat>div{min-height:40px;display:grid;place-items:center;border-radius:6px;font-size:13px}
+.hh{min-height:26px!important;color:var(--muted);font-weight:500}
+.hy{justify-items:start!important;place-items:center start!important;font:600 1.05rem/1 var(--f-disp)!important;color:var(--ink)}
+.hy small{display:block;font:500 11.5px/1.2 var(--f-body);color:var(--muted);margin-top:2px}
+.hc{background:var(--soft);color:var(--ink);font-weight:500}
+@media(max-width:560px){.heat{grid-template-columns:46px repeat(12,minmax(0,1fr));gap:2px}.heat>div{font-size:10px;min-height:34px;border-radius:4px}.hy small{display:none}}
+.dkey{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted);margin-top:12px}
+.dkey .bar{width:150px;height:10px;border-radius:5px;background:linear-gradient(90deg,rgba(43,119,189,.65),rgba(43,119,189,0) 50%,rgba(218,83,26,0) 50%,rgba(218,83,26,.65))}
+
+/* ---------- faixas de preço ---------- */
+.brow{display:grid;grid-template-columns:46px minmax(0,1fr);gap:12px;align-items:center;margin-bottom:8px}
+.by{font:600 1.1rem/1 var(--f-disp)}
+.bbar{display:flex;height:38px;border-radius:7px;overflow:hidden;gap:2px}
+.bseg{display:grid;place-items:center;font:600 12.5px var(--f-body);min-width:0;overflow:hidden;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bseg.k1{background:var(--b1);color:var(--bt1)}.bseg.k2{background:var(--b2);color:var(--bt2)}.bseg.k3{background:var(--b3);color:var(--bt3)}
+.bseg.k4{background:var(--b4);color:var(--bt4)}.bseg.k5{background:var(--b5);color:var(--bt5)}.bseg.k6{background:var(--b6);color:var(--bt6)}
+.sw.k1{background:var(--b1)}.sw.k2{background:var(--b2)}.sw.k3{background:var(--b3)}.sw.k4{background:var(--b4)}.sw.k5{background:var(--b5)}.sw.k6{background:var(--b6)}
+table.st{border-collapse:collapse;width:100%;font-size:.95rem;font-variant-numeric:tabular-nums;margin-top:6px}
+.st th{font:600 .85rem var(--f-body);color:var(--muted);text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
+.st th:first-child,.st td:first-child{text-align:left}
+.st td{padding:8px 10px;border-bottom:1px solid var(--soft);text-align:right}
+.st td:first-child{font-weight:600}
+.st tr.cur td{background:color-mix(in srgb,var(--sun) 20%,transparent)}
+@media(max-width:560px){.st{font-size:.88rem}.st th,.st td{padding:8px 5px}}
+
+/* ---------- companhias ---------- */
+.who{display:inline-flex;align-items:center;gap:8px}
+.who i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* ---------- rotas ---------- */
+.ticket{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:22px}
+.tk-main{padding:20px 24px;display:grid;align-content:center;gap:6px}
+.tk-main h3{font-size:clamp(1.3rem,2.3vw,1.7rem);margin:0;line-height:1.1}
+.tk-main p{color:var(--muted);font-size:.93rem}
+.tk-stub{position:relative;border-left:2px dashed var(--line);padding:18px 24px;display:grid;gap:12px;align-content:center;min-width:200px}
+.tk-stub::before,.tk-stub::after{content:"";position:absolute;left:-10px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+.tk-stub::before{top:-10px;clip-path:inset(50% 0 0 0)}
+.tk-stub::after{bottom:-10px;clip-path:inset(0 0 50% 0)}
+.tk-stub .v{font:600 2rem/1 var(--f-disp);font-variant-numeric:tabular-nums}
+.tk-stub .l{font-size:.85rem;color:var(--muted);line-height:1.25}
+.tk-stub .cmp{font-weight:600}
+.cmp.up{color:var(--warn)}.cmp.dn{color:var(--cool)}
+@media(max-width:640px){.ticket{grid-template-columns:minmax(0,1fr)}.tk-stub{border-left:0;border-top:2px dashed var(--line);grid-template-columns:repeat(3,auto);justify-content:space-between;min-width:0}.tk-stub::before{top:-10px;left:-10px;clip-path:inset(0 0 0 50%)}.tk-stub::after{top:-10px;bottom:auto;left:auto;right:-10px;clip-path:inset(0 50% 0 0)}.tk-stub .v{font-size:1.5rem}}
+.picker{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.picker label{font-weight:600}
+select#rsel{flex:1 1 280px;min-width:0;max-width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.finder{display:flex;gap:10px;margin-bottom:10px}
+.finder input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.tblwrap{max-height:600px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table.rt{width:100%;border-collapse:collapse;font-size:.93rem}
+.rt th{position:sticky;top:0;z-index:1;background:var(--surface);text-align:left;font:600 .82rem var(--f-body);color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.rt th button{all:unset;cursor:pointer;display:inline-flex;gap:5px;align-items:center}
+.rt th button:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
+.rt th[aria-sort] button{color:var(--ink)}
+.rt td{padding:9px 12px;border-bottom:1px solid var(--soft);vertical-align:middle}
+.rt td.num,.rt th.num{text-align:right;font-variant-numeric:tabular-nums}
+.rt tbody tr{cursor:pointer}
+.rt tbody tr:hover td{background:var(--soft)}
+.rt tbody tr[aria-selected="true"] td{background:color-mix(in srgb,var(--sun) 24%,var(--surface))}
+.rt td.rn{font-weight:500;min-width:170px}
+.rt .neg{color:var(--cool);font-weight:600}.rt .pos{color:var(--warn);font-weight:600}
+.empty{padding:22px;color:var(--muted)}
+.spark{display:block}
+
+/* aeroportos */
+.arow{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr) 92px;gap:12px;align-items:center;margin-bottom:6px;font-size:.95rem}
+.arow .an{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arow .ab{height:24px;background:var(--soft);border-radius:5px;overflow:hidden}
+.arow .ab div{height:100%;border-radius:5px}
+.arow .av{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;line-height:1.1}
+.arow .av small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+@media(max-width:560px){.arow{grid-template-columns:104px minmax(0,1fr) 70px;gap:8px;font-size:.85rem}.arow .an{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.15}}
+
+/* método */
+.meth{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 44px}
+@media(max-width:800px){.meth{grid-template-columns:minmax(0,1fr)}}
+.meth h3{font-size:1.2rem}
+.meth p{color:var(--muted);font-size:.96rem}
+.meth p b{color:var(--ink);font-weight:600}
+footer{padding:64px 0 48px;color:var(--muted);font-size:.9rem}
+noscript,.err{display:block;padding:24px;background:var(--surface);border:1px solid var(--warn);border-radius:12px;margin:24px 0}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* ---------- novos: comparação, mapa, casos ---------- */
+select#rsel2,select#asel{flex:1 1 280px;min-width:0;max-width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.picker label{min-width:96px}
+.arow{cursor:pointer;border-radius:6px;padding:1px 0}
+.arow:hover .an{text-decoration:underline}
+.arow[aria-selected="true"]{background:color-mix(in srgb,var(--sun) 24%,transparent);box-shadow:0 0 0 4px color-mix(in srgb,var(--sun) 24%,transparent)}
+.map-shape{fill:var(--soft);stroke:var(--line);stroke-width:1.4;stroke-linejoin:round}
+.mp{cursor:pointer;stroke:var(--bg);stroke-width:1.5;fill-opacity:.92}
+.mp:hover{stroke:var(--ink)}
+.mp.sel{stroke:var(--ink);stroke-width:2.6}
+.mlab{font:600 11px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+.case-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:34px;align-items:start;margin-top:8px}
+@media(max-width:900px){.case-grid{grid-template-columns:minmax(0,1fr);gap:22px}}
+.case-facts{list-style:none;padding:0;margin:0}
+.case-facts li{position:relative;padding:11px 0 11px 20px;border-bottom:1px solid var(--line)}
+.case-facts li:first-child{padding-top:2px}
+.case-facts li::before{content:"";position:absolute;left:0;top:1.1em;width:8px;height:8px;border-radius:2px;background:var(--sig)}
+.case-facts li:first-child::before{top:.65em}
+.case-ctx{margin-top:16px;padding:12px 14px;border-left:3px solid var(--sun);background:var(--surface);border-radius:0 8px 8px 0;font-size:.92rem;color:var(--muted)}
+.case-ctx b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div id="tip" role="tooltip"></div>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">Tarifas aéreas <span>Brasil</span></div>
+    <nav id="nav" aria-label="Seções">
+      <a href="#panorama">Panorama</a>
+      <a href="#casos">Casos reais</a>
+      <a href="#sazonalidade">Sazonalidade</a>
+      <a href="#faixas">Faixas de preço</a>
+      <a href="#companhias">Companhias</a>
+      <a href="#rotas">Rotas</a>
+      <a href="#aeroportos">Aeroportos</a>
+      <a href="#metodo">Método</a>
+    </nav>
+    <button id="theme" type="button" aria-label="Alternar entre tema claro e escuro" title="Alternar tema">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="wrap">
+  <noscript>Este painel precisa de JavaScript para desenhar os gráficos.</noscript>
+  <div id="erro"></div>
+
+  <section id="panorama" class="hero" data-nav>
+    <h1 id="h1"></h1>
+    <p class="lead" id="lead1"></p>
+    <p class="lead" id="lead2"></p>
+
+    <div class="ctrl">
+      <div class="seg" role="group" aria-label="Medida da tarifa" id="heroMetric">
+        <button type="button" data-v="media" aria-pressed="true">Média</button>
+        <button type="button" data-v="mediana" aria-pressed="false">Mediana</button>
+      </div>
+      <button type="button" class="chip" id="heroSmooth" aria-pressed="false">Suavizar (média móvel de 12 meses)</button>
+    </div>
+    <div class="legend" id="heroLegend"></div>
+    <div class="chart" id="heroChart" role="img" aria-label="Tarifa média mensal, em valores reais e nominais, com assentos vendidos por mês"></div>
+    <p class="note" id="heroNote"></p>
+  </section>
+
+  <section id="casos" data-nav>
+    <div class="sec-head">
+      <h2>Casos reais: quando o mundo aparece nos dados</h2>
+      <p class="lead">Cinco momentos em que a tarifa, o volume de vendas ou a concorrência mudaram de forma clara. Escolha um caso: os números vêm dos dados; o contexto vem de fora deles.</p>
+    </div>
+    <div class="chips" id="caseTabs" role="group" aria-label="Casos reais"></div>
+    <h3 id="caseTitle" style="margin-top:26px;font-size:1.7rem"></h3>
+    <div class="case-grid">
+      <div>
+        <div class="legend" id="caseLegend"></div>
+        <div class="chart" id="caseChart" role="img" aria-label="Gráfico do caso selecionado"></div>
+      </div>
+      <div>
+        <ul class="case-facts" id="caseFacts"></ul>
+        <div class="case-ctx" id="caseCtx"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sazonalidade" data-nav>
+    <div class="sec-head">
+      <h2>Sazonalidade: quando a passagem sai mais barata</h2>
+      <p class="lead" id="seasonLead"></p>
+    </div>
+    <div class="two">
+      <div>
+        <h3>Tarifa real por mês de venda</h3>
+        <p class="h3sub">Cor: quanto o mês ficou acima (laranja) ou abaixo (azul) da média do próprio ano.</p>
+        <div id="heat" class="heat" role="table" aria-label="Tarifa média real por mês e ano"></div>
+        <div class="dkey"><span>mais barato que a média do ano</span><span class="bar"></span><span>mais caro</span></div>
+      </div>
+      <div>
+        <h3 id="seasonH">Padrão típico</h3>
+        <p class="h3sub">Diferença média de cada mês para a média do ano.</p>
+        <div class="chips" id="seasonWin" role="group" aria-label="Período do padrão típico" style="margin:6px 0 4px"></div>
+        <div class="chart" id="seasonChart" role="img" aria-label="Índice sazonal médio por mês"></div>
+      </div>
+    </div>
+    <p class="note">O mês é o da <b>compra</b> da passagem, não o da viagem. Por isso o pico de setembro a dezembro retrata quem compra cedo para as férias e o fim de ano.</p>
+  </section>
+
+  <section id="faixas" data-nav>
+    <div class="sec-head">
+      <h2 id="bandsH">Faixas de preço</h2>
+      <p class="lead" id="bandsLead"></p>
+    </div>
+    <div class="two">
+      <div>
+        <h3>Como os assentos se distribuem por faixa</h3>
+        <p class="h3sub">Participação nos assentos vendidos de cada ano. Valores em R$ de <span class="baseLbl"></span>.</p>
+        <div class="legend" id="bandsLegend"></div>
+        <div id="bands"></div>
+      </div>
+      <div>
+        <h3>Formato da distribuição</h3>
+        <p class="h3sub">Escolha os anos para comparar. A curva mostra a parcela dos assentos vendida em cada faixa de R$ 100.</p>
+        <div class="chips" id="distChips" role="group" aria-label="Anos exibidos"></div>
+        <div class="chart" id="distChart" role="img" aria-label="Distribuição dos assentos por faixa de preço, por ano"></div>
+        <table class="st" id="distTable" aria-label="Estatísticas por ano"></table>
+      </div>
+    </div>
+    <p class="note" id="distNote"></p>
+  </section>
+
+  <section id="companhias" data-nav>
+    <div class="sec-head">
+      <h2>Companhias: de quatro grandes para três</h2>
+      <p class="lead" id="empLead"></p>
+    </div>
+    <div class="two">
+      <div>
+        <h3>Participação nos assentos vendidos</h3>
+        <p class="h3sub">Cada mês soma 100%.</p>
+        <div class="chart" id="shareChart" role="img" aria-label="Participação mensal de cada companhia nos assentos vendidos"></div>
+      </div>
+      <div>
+        <h3 id="empLinesH">Tarifa média real por companhia</h3>
+        <p class="h3sub" id="empLinesSub"></p>
+        <div class="seg" id="empMetric" role="group" aria-label="Medida exibida" style="margin-bottom:8px"></div>
+        <div class="legend" id="empLegend"></div>
+        <div class="chart" id="empLines" role="img" aria-label="Séries mensais por companhia: tarifa média real, assentos vendidos ou diferença para a média nacional"></div>
+      </div>
+    </div>
+    <div style="margin-top:34px;max-width:760px">
+      <h3>Comparativo do ano</h3>
+      <div class="chips" id="empChips" role="group" aria-label="Ano do comparativo"></div>
+      <div style="overflow-x:auto"><table class="st" id="empTable" aria-label="Companhias no ano selecionado"></table></div>
+      <p class="note">Diferenças de preço entre companhias refletem também as rotas que cada uma opera, e não só sua política tarifária. <span id="hhiNote"></span></p>
+    </div>
+  </section>
+
+  <section id="rotas" data-nav>
+    <div class="sec-head">
+      <h2>Rotas: compare qualquer uma das <span id="nRotas">250</span> maiores ligações</h2>
+      <p class="lead">Cada ligação reúne os dois sentidos e considera origem e destino final, com ou sem conexão. As 250 maiores respondem por <span id="cov"></span> dos assentos vendidos.</p>
+    </div>
+    <div class="two rt2">
+      <div>
+        <div class="picker"><label for="rsel">Ligação</label><select id="rsel"></select></div>
+        <div class="picker"><label for="rsel2">Comparar com</label><select id="rsel2"></select></div>
+        <div class="ticket" id="ticket"></div>
+        <div class="ctrl" style="margin-top:0">
+          <button type="button" class="chip" id="rSmooth" aria-pressed="false">Suavizar (média móvel de 12 meses)</button>
+        </div>
+        <div class="legend" id="rLegend"></div>
+        <div class="chart" id="rChart" role="img" aria-label="Tarifa real mensal da ligação selecionada comparada à média nacional"></div>
+        <h3 style="margin-top:30px">Quem cobra mais nesta ligação</h3>
+        <p class="h3sub">Tarifa média real por companhia e por ano (R$ de <span class="baseLbl"></span>).</p>
+        <div class="legend" id="rAirLg"></div>
+        <div class="chart" id="rAir" role="img" aria-label="Tarifa média real por companhia e por ano na ligação selecionada"></div>
+        <p class="note" id="rAirTxt"></p>
+      </div>
+      <div>
+        <h3>Todas as ligações</h3>
+        <p class="h3sub">Clique numa linha para ver a ligação ao lado. Ordene pelos títulos das colunas.</p>
+        <div class="finder"><input id="rfind" type="search" placeholder="Buscar cidade ou código (ex.: Recife, GRU)" aria-label="Buscar ligação"></div>
+        <div class="tblwrap"><table class="rt" id="rtab"></table></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="aeroportos" data-nav>
+    <div class="sec-head">
+      <h2>Aeroportos: onde a passagem é mais cara</h2>
+      <p class="lead">O tamanho de cada bolha é o volume de assentos vendidos com origem no aeroporto; a cor compara a tarifa real com a média nacional. Clique em uma bolha ou em uma barra para abrir o aeroporto em foco.</p>
+    </div>
+    <div class="ctrl" style="margin:0 0 16px"><div class="chips" id="aChips" role="group" aria-label="Ano dos aeroportos"></div></div>
+    <div class="two">
+      <div>
+        <h3>Mapa esquemático</h3>
+        <p class="h3sub">Posição aproximada dos aeroportos sobre uma silhueta simplificada do Brasil.</p>
+        <div class="chart" id="map"></div>
+        <div class="dkey"><span>mais barato que a média nacional</span><span class="bar"></span><span>mais caro</span></div>
+      </div>
+      <div>
+        <h3>Maiores aeroportos de origem</h3>
+        <p class="h3sub">Comprimento da barra: volume de assentos. Cor: tarifa real contra a média nacional.</p>
+        <div id="aero"></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:64px;font-size:1.7rem">Aeroporto em foco</h3>
+    <div class="picker" style="margin-top:12px"><label for="asel">Aeroporto</label><select id="asel"></select></div>
+    <div class="ticket" id="aTicket"></div>
+    <div class="two">
+      <div>
+        <div class="ctrl" style="margin-top:0"><button type="button" class="chip" id="aSmooth" aria-pressed="false">Suavizar (média móvel de 12 meses)</button></div>
+        <div class="legend" id="aLegend"></div>
+        <div class="chart" id="aChart" role="img" aria-label="Tarifa real mensal do aeroporto selecionado comparada à média nacional"></div>
+      </div>
+      <div>
+        <h3>Quem opera aqui</h3>
+        <p class="h3sub">Participação de cada companhia nos assentos com origem neste aeroporto, por ano.</p>
+        <div class="legend"><span class="lg"><i class="sw box" style="background:var(--tam)"></i>LATAM</span><span class="lg"><i class="sw box" style="background:var(--glo)"></i>Gol</span><span class="lg"><i class="sw box" style="background:var(--azu)"></i>Azul</span><span class="lg"><i class="sw box" style="background:var(--one)"></i>Avianca</span><span class="lg"><i class="sw box" style="background:var(--out)"></i>Outras</span></div>
+        <div id="aMix"></div>
+        <h3 id="aFaresH" style="margin-top:26px"></h3>
+        <div style="overflow-x:auto"><table class="st" id="aFares"></table></div>
+        <p class="note">A tarifa por companhia só aparece com pelo menos 200 assentos no ano. O ano exibido é o escolhido acima do mapa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="metodo" data-nav>
+    <div class="sec-head"><h2>Como ler estes dados</h2></div>
+    <div class="meth">
+      <div><h3>Fonte</h3><p>Microdados de <b>tarifas aéreas domésticas comercializadas</b>, da ANAC: <b id="mArq"></b> arquivos mensais (<span id="mPer"></span>), <b id="mLin"></b> linhas. Cada linha é uma combinação de mês, empresa, origem, destino e tarifa, com o número de assentos vendidos nesse valor.</p></div>
+      <div><h3>O que a tarifa representa</h3><p>Valor "seco" do transporte, sem taxa de embarque, bagagem ou serviços. Vale para o público adulto em geral: a ANAC exclui milhagem, gratuidades e acordos corporativos. O mês de referência é o <b>mês da venda</b>, e a ligação é origem e destino finais (pode incluir conexão).</p></div>
+      <div><h3>Médias e percentis</h3><p>A tarifa média de cada recorte é ponderada pelos assentos vendidos, igual ao cálculo da ANAC. Mediana e percentis também são ponderados. Em out/2025 o cálculo aqui dá <b>R$ 720,44</b>; a ANAC divulgou R$ 720,36 na audiência de 26/11/2025 na Câmara dos Deputados. A série real de janeiro a outubro também reproduz, com diferença de até 0,3%, a divulgada pelo Ministério de Portos e Aeroportos (R$ 721,57 em 2022; R$ 642,19 em 2025).</p></div>
+      <div><h3>Valores reais</h3><p>Para comparar anos diferentes, as tarifas são corrigidas mês a mês pelo <b>IPCA</b> (IBGE, série 433 do Banco Central) e expressas em R$ de <span class="baseLbl"></span>. Os índices mensais reproduzem os acumulados anuais oficiais (<span id="mIpca"></span>).</p></div>
+      <div><h3>Tratamento dos arquivos</h3><p>Os arquivos vieram com formatos de cabeçalho, codificações de texto e formas de escrever decimais diferentes (vírgula e ponto). Tudo foi unificado e conferido: linhas e assentos de cada mês coincidem com os arquivos originais. A limpeza é a mesma do ARTEF1; nos meses de 2020 a 2025 os totais são idênticos aos do primeiro painel.</p></div>
+      <div><h3>Limites da análise</h3><p>Os dados não trazem número de voos, passageiros, ocupação nem distância: “assentos vendidos” é a medida de volume. A Avianca (ONE), que operou até 2019, aparece separada; as companhias pequenas aparecem agrupadas em "Outras". O total de assentos da base cai de 2015 para 2019; ainda vamos conferir, com os Dados Estatísticos da ANAC, se isso reflete o mercado ou uma mudança de cobertura da base. Rotas e aeroportos com nome usam a tabela de códigos ICAO; onde o código não foi identificado com segurança, ele aparece sozinho.</p></div>
+      <div><h3>Casos reais e mapa</h3><p>Nos casos reais, os números vêm dos dados e o contexto vem de fora (ANAC, imprensa); a causa nunca é inferida dos dados. “Mesmas rotas e companhias” é uma cesta fixa: só entram combinações presentes nos dois meses, ponderadas pelo mês inicial. O mapa é esquemático: posições aproximadas e silhueta simplificada.</p></div>
+    </div>
+  </section>
+
+  <footer>Fonte dos dados: ANAC, tarifas aéreas domésticas comercializadas. Inflação: IPCA, IBGE.</footer>
+</main>
+
+<script id="dados" type="application/json">__DATA__</script>
+<script>
+__JS__
+</script>
+</body>
+</html>
