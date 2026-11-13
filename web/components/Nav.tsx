@@ -7,23 +7,28 @@ const itens = [
   ['/demanda', 'Demanda'], ['/segmentos', 'Segmentos'], ['/cenarios', 'Cenários'], ['/metodo', 'Método'],
 ];
 
+function alternarTema() {
+  const el = document.documentElement;
+  const atual = el.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const novo = atual === 'dark' ? 'light' : 'dark';
+  el.setAttribute('data-theme', novo);
+  try { localStorage.setItem('tarifas-tema', novo); } catch { /* sem armazenamento */ }
+}
+
 export default function Nav() {
   const p = usePathname();
   return (
-    <header className="sticky top-0 z-20 border-b border-linha bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 lg:flex-row lg:items-center lg:justify-between md:px-6">
-        <Link href="/" className="flex shrink-0 items-baseline gap-2">
-          <span className="whitespace-nowrap text-lg font-bold">Tarifas aéreas</span>
-          <span className="hidden whitespace-nowrap text-sm text-slate-500 xl:inline">previsão e cenários</span>
-        </Link>
-        <nav className="-mx-1 flex flex-wrap gap-1">
+    <header className="topo">
+      <div className="mx-auto flex h-14 max-w-[1180px] items-center gap-5 px-4 md:px-5">
+        <Link href="/" className="marca">Tarifas aéreas <span>Brasil</span></Link>
+        <nav className="menu" aria-label="Páginas">
           {itens.map(([h, t]) => (
-            <Link key={h} href={h}
-              className={`whitespace-nowrap rounded-md px-2 py-1.5 text-sm ${p === h ? 'bg-tinta text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
-              {t}
-            </Link>
+            <Link key={h} href={h} aria-current={(h === '/' ? p === '/' : p.startsWith(h)) ? 'page' : undefined}>{t}</Link>
           ))}
         </nav>
+        <button type="button" className="tema" onClick={alternarTema} aria-label="Alternar entre tema claro e escuro" title="Alternar tema">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+        </button>
       </div>
     </header>
   );

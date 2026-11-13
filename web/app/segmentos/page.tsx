@@ -5,7 +5,7 @@ import { Estado, Titulo } from '@/components/ui';
 import { getParametros, getTopRotas, Rota } from '@/lib/dados';
 import { fmtN, fmtR } from '@/lib/sim';
 
-const CORES = ['#1f6feb', '#e11d48', '#059669', '#d97706', '#7c3aed', '#64748b', '#0891b2'];
+const CORES = ['var(--sig)', 'var(--warn)', 'var(--azu)', 'var(--sun)', 'var(--one)', 'var(--nom)', 'var(--cool)'];
 
 export default function PaginaSegmentos() {
   const [rotas, setRotas] = useState<Rota[]>([]);
@@ -30,7 +30,7 @@ export default function PaginaSegmentos() {
               <div className="mb-2 font-semibold">Distância × tarifa real por rota (bolha = assentos)</div>
               <div style={{ width: '100%', height: 420 }}>
                 <ResponsiveContainer><ScatterChart margin={{ left: 10, right: 10 }}>
-                  <CartesianGrid stroke="#ece8de" /><XAxis type="number" dataKey="distancia_km" name="Distância (km)" tick={{ fontSize: 12 }} unit=" km" />
+                  <CartesianGrid stroke="var(--line)" /><XAxis type="number" dataKey="distancia_km" name="Distância (km)" tick={{ fontSize: 12 }} unit=" km" />
                   <YAxis type="number" dataKey="tarifa_real_12m" name="Tarifa real" tick={{ fontSize: 12 }} tickFormatter={(v) => fmtR(v)} width={80} />
                   <ZAxis dataKey="assentos_12m" range={[15, 400]} name="Assentos" />
                   <Tooltip formatter={(v: number, n: string) => [n === 'Tarifa real' ? fmtR(v) : fmtN(v), n]} />
@@ -45,8 +45,8 @@ export default function PaginaSegmentos() {
               <div className="cartao">
                 <div className="mb-2 font-semibold">Escolha de k (silhueta)</div>
                 <div style={{ width: '100%', height: 180 }}>
-                  <ResponsiveContainer><BarChart data={sil}><CartesianGrid stroke="#ece8de" vertical={false} /><XAxis dataKey="k" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} domain={[0, 'auto']} /><Tooltip formatter={(v: number) => fmtN(v, 3)} /><Bar dataKey="silhueta" fill="#14213d" /></BarChart></ResponsiveContainer>
+                  <ResponsiveContainer><BarChart data={sil}><CartesianGrid stroke="var(--line)" vertical={false} /><XAxis dataKey="k" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} domain={[0, 'auto']} /><Tooltip formatter={(v: number) => fmtN(v, 3)} /><Bar dataKey="silhueta" fill="var(--sig)" /></BarChart></ResponsiveContainer>
                 </div>
                 <p className="nota">k escolhido = {cl.k}. Concordância com a mistura gaussiana: {fmtN(100 * cl.acordo_gmm, 0)}% das rotas no mesmo grupo. Silhueta baixa indica grupos com fronteiras difusas: os segmentos descrevem tendências, não categorias estanques.</p>
               </div>
@@ -76,7 +76,7 @@ export default function PaginaSegmentos() {
             <table className="tabela">
               <thead><tr><th>#</th><th>Rota</th><th>Segmento</th><th className="text-right">Assentos (12m)</th><th className="text-right">Tarifa real</th><th className="text-right">Distância</th></tr></thead>
               <tbody>{comSeg.filter((r) => filtro === 'todos' || r.segmento === filtro).map((r) => (
-                <tr key={r.rota}><td>{r.rank}</td><td>{r.nome} <span className="text-slate-400">{r.cidades}</span></td><td className="text-xs">{r.segmento}</td>
+                <tr key={r.rota}><td>{r.rank}</td><td>{r.nome} <span className="text-muted">{r.cidades}</span></td><td className="text-xs">{r.segmento}</td>
                   <td className="text-right">{fmtN(r.assentos_12m)}</td><td className="text-right">{fmtR(r.tarifa_real_12m)}</td><td className="text-right">{fmtN(r.distancia_km ?? 0)} km</td></tr>))}
               </tbody>
             </table>

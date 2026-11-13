@@ -5,7 +5,7 @@ import { getMetricas, getParametros, Metrica } from '@/lib/dados';
 import { fmtMes, fmtN } from '@/lib/sim';
 
 function Secao({ t, children }: { t: string; children: React.ReactNode }) {
-  return <section className="cartao space-y-2"><h2 className="text-lg font-semibold">{t}</h2><div className="space-y-2 text-sm leading-relaxed text-slate-700">{children}</div></section>;
+  return <section className="cartao space-y-2"><h2 className="text-lg font-semibold">{t}</h2><div className="space-y-2 text-sm leading-relaxed text-tinta">{children}</div></section>;
 }
 
 export default function Metodo() {
@@ -27,7 +27,7 @@ export default function Metodo() {
           convertido pela PTAX (série 3698). A ponte, estimada no período comum, é ln QAV(t) = {par ? fmtN(par.ponte_qav.a, 3) : '…'} + {par ? fmtN(par.ponte_qav.b, 3) : '…'} · ln(preço internacional em reais)(t−1),
           com R² de {par ? fmtN(par.ponte_qav.r2, 3) : '…'} em {par?.ponte_qav.n ?? '…'} meses.</p>
         <p><b>Banco de dados:</b> tudo fica num Postgres (Supabase): séries mensais de Brasil, companhias e todas as rotas, o painel rota × companhia × mês para consultas livres,
-          previsões, parâmetros e os cenários salvos pelos usuários.</p>
+          previsões, parâmetros, os dados das telas de análise do ARTEF1 e os cenários salvos pelos usuários.</p>
       </Secao>
       <Secao t="Previsão: seleção de modelos (aprendizado de máquina)">
         <p>Dez candidatos para cada série (Brasil, quatro grupos de companhias e as 60 maiores rotas): sazonal ingênuo; suavização exponencial de Holt-Winters com tendência amortecida;

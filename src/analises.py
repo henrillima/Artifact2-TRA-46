@@ -9,11 +9,15 @@ generalizado para qualquer periodo e com a Avianca separada das "Outras".
 Gera:
   dados/analises/dados_dashboard.json        dados que alimentam as analises
   dados/analises/resumo_*.csv                tabelas prontas para Excel/PowerPoint
-  web/public/analises/index.html             a pagina de analises (servida pelo site em /analises)
+  dados/banco/analises.csv                   os mesmos dados, um bloco por linha, para a tabela "analises" do banco
+  web/public/dados/analises.json             copia estatica usada pelo site se o banco ainda nao tiver a tabela
+
+As telas ficam no site: web/app/analises (pagina), web/components/analises/Secoes.tsx (marcacao)
+e web/lib/analises/painel.ts (graficos e interacao, o codigo do ARTEF1 adaptado).
 
 Uso (na pasta src/):
   python3 analises.py ../raw [../raw_novos]  # processa tudo (alguns minutos)
-  python3 analises.py --so-html              # so remonta o index.html a partir do JSON ja gerado
+  python3 analises.py --so-exportar          # so regrava o CSV do banco e a copia estatica a partir do JSON
 """
 import gc
 import io
@@ -33,8 +37,8 @@ from base import AEROPORTOS, EXT  # noqa: E402  (ICAO -> cidade, IATA, lat, lon;
 
 RAIZ = Path(__file__).resolve().parent.parent
 PROC = RAIZ / 'dados' / 'analises'
-FRONT = RAIZ / 'analises'                       # template.html e app.js
-SAIDA_HTML = RAIZ / 'web' / 'public' / 'analises' / 'index.html'
+SAIDA_BANCO = RAIZ / 'dados' / 'banco' / 'analises.csv'
+SAIDA_WEB = RAIZ / 'web' / 'public' / 'dados' / 'analises.json'
 PRIMEIRO_MES = '201501'
 GRUPOS = ['TAM', 'GLO', 'AZU', 'ONE', 'OUT']
 NOMES_GRUPO = {'TAM': 'LATAM', 'GLO': 'Gol', 'AZU': 'Azul', 'ONE': 'Avianca', 'OUT': 'Outras'}
@@ -578,25 +582,23 @@ def gravar_csvs(D, T, res):
     res['qual'].to_csv(PROC / 'qualidade_por_arquivo.csv', **kw)
 
 
-def montar_html():
+def exportar_site():
+    """Grava os dados das analises no CSV do banco (tabela analises: secao, dados) e na copia estatica do site."""
     jp = PROC / 'dados_dashboard.json'
     if not jp.exists():
         raise SystemExit('Nao encontrei dados/analises/dados_dashboard.json. Rode primeiro: python3 analises.py ../raw')
-    data = jp.read_text(encoding='utf-8')
-    assert '</script' not in data.lower()
-    tpl = (FRONT / 'template.html').read_text(encoding='utf-8')
-    js = (FRONT / 'app.js').read_text(encoding='utf-8')
-    for marca in ('__DATA__', '__JS__'):
-        assert tpl.count(marca) == 1, f'marcador {marca} deveria aparecer 1 vez no template.html'
-    out = tpl.replace('__DATA__', data).replace('__JS__', js)
-    SAIDA_HTML.parent.mkdir(parents=True, exist_ok=True)
-    SAIDA_HTML.write_text(out, encoding='utf-8')
-    log(f'  {SAIDA_HTML.relative_to(RAIZ)} gerado ({len(out.encode("utf-8")) / 1024:.0f} KB)')
+    D = json.loads(jp.read_text(encoding='utf-8'))
+    SAIDA_BANCO.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame([{'secao': k, 'dados': json.dumps(v, ensure_ascii=False, separators=(',', ':'))} for k, v in D.items()]) \
+        .to_csv(SAIDA_BANCO, index=False, encoding='utf-8')
+    SAIDA_WEB.parent.mkdir(parents=True, exist_ok=True)
+    SAIDA_WEB.write_text(jp.read_text(encoding='utf-8'), encoding='utf-8')
+    log(f'  {SAIDA_BANCO.relative_to(RAIZ)} ({len(D)} blocos) e {SAIDA_WEB.relative_to(RAIZ)} gravados')
 
 
 def main():
-    if '--so-html' in sys.argv:
-        montar_html()
+    if '--so-exportar' in sys.argv:
+        exportar_site()
         return
     global MESES, ANOS, P0
     t0 = time.time()
@@ -628,9 +630,9 @@ def main():
     (PROC / 'dados_dashboard.json').write_text(
         json.dumps(limpa(D), ensure_ascii=False, separators=(',', ':'), allow_nan=False), encoding='utf-8')
     gravar_csvs(D, T, res)
-    log('4/4  Gerando o dashboard ...')
-    montar_html()
-    log(f'Pronto em {time.time() - t0:.0f}s. Abra dashboard/index.html no navegador.')
+    log('4/4  Exportando para o banco e para o site ...')
+    exportar_site()
+    log(f'Pronto em {time.time() - t0:.0f}s. Depois rode "npm run carregar" na pasta web/.')
 
 
 if __name__ == '__main__':

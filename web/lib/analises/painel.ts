@@ -1,11 +1,17 @@
-(function(){
-'use strict';
-var D;
-try{ D=JSON.parse(document.getElementById('dados').textContent); }
-catch(e){ document.getElementById('erro').innerHTML='<div class="err">Não foi possível ler os dados do painel.</div>'; return; }
+// @ts-nocheck
+/*
+ * Telas de análise do ARTEF1 (panorama, casos reais, sazonalidade, faixas de preço, companhias, rotas, aeroportos),
+ * agora dentro do site do ARTEF2. Os gráficos são SVG desenhados à mão, como no ARTEF1; as cores vêm das variáveis
+ * do tema, então acompanham o modo claro/escuro sem redesenhar.
+ *
+ * montarPainel(root, D) recebe o elemento que contém a marcação das seções (components/analises/Secoes.tsx) e os
+ * dados (tabela "analises" do banco) e devolve uma função de limpeza para o React chamar ao sair da página.
+ */
+export function montarPainel(root: HTMLElement, D: any): () => void {
+var vivo=true;
 
 /* ============ utilidades ============ */
-var $=function(s){return document.querySelector(s)};
+var $=function(s){return root.querySelector(s)};
 var MA=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 var ML=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 var MESES=D.meses,YEARS=D.meta.anos.slice(),LY=D.meta.ultimo_completo,PY=D.meta.parcial,BASE=D.meta.base,Y0=YEARS[0];
@@ -355,7 +361,7 @@ function routeSelect(){
 function routeTicket(r){
   var a25=r.anual[LY],nat=A[LY].media_real,cmp=a25[1]?a25[1]/nat-1:null,p22=r.anual[2022][1],vr=(a25[1]&&p22)?a25[1]/p22-1:null;
   var parts=r.nome.split(' ↔ ');
-  $('#ticket').innerHTML='<div class="tk-main"><h3>'+esc(parts[0])+' <span style="color:var(--sig-ink)">↔</span> '+esc(parts[1])+'</h3><p>Soma dos dois sentidos. Código ICAO: '+r.o+' e '+r.d+'.</p></div>'+
+  $('#ticket').innerHTML='<div class="tk-main"><h3>'+esc(parts[0])+' <span style="color:var(--sig-ink)">↔</span> '+esc(parts[1])+'</h3><p>Soma dos dois sentidos. Código ICAO: '+r.o+' e '+r.d+'.</p><a class="ponte" data-interno href="/previsao?rota='+[r.o,r.d].sort().join('-')+'">Prever a tarifa desta rota → <b>ARTEF2</b></a></div>'+
    '<div class="tk-stub"><div><div class="v">'+(a25[1]?brl(a25[1]):'—')+'</div><div class="l">tarifa real média em '+LY+'</div></div>'+
    '<div><div class="cmp '+(cmp==null?'':cmp>0?'up':'dn')+'">'+(cmp==null?'—':pcs(cmp,0)+' vs. Brasil')+'</div><div class="l">média nacional: '+brl(nat)+'</div></div>'+
    '<div><div class="cmp">'+(vr==null?'—':pcs(vr,0))+'</div><div class="l">variação real 2022 a '+LY+' · '+mil(a25[0])+' assentos em '+LY+'</div></div></div>';
@@ -656,7 +662,7 @@ function aeroFocusDraw(){
   var a=aeroBy(S.aero.id),y=S.aero.year,nat=A[LY].media_real,a25=a.anual[LY],p22=a.anual[2022][1],sm=S.aero.smooth;
   var rank=D.aero.slice().sort(function(p,q){return q.anual[LY][0]-p.anual[LY][0]}).map(function(x){return x.icao}).indexOf(a.icao)+1;
   var cmp=a25[1]?a25[1]/nat-1:null,vr=(a25[1]&&p22)?a25[1]/p22-1:null;
-  $('#aTicket').innerHTML='<div class="tk-main"><h3>'+esc(a.nome)+'</h3><p>Assentos vendidos com origem neste aeroporto. Código ICAO: '+a.icao+'.</p></div>'+
+  $('#aTicket').innerHTML='<div class="tk-main"><h3>'+esc(a.nome)+'</h3><p>Assentos vendidos com origem neste aeroporto. Código ICAO: '+a.icao+'.</p><a class="ponte" data-interno href="/demanda?aeroporto='+a.icao+'">Simular um choque de demanda aqui → <b>ARTEF2</b></a></div>'+
     '<div class="tk-stub"><div><div class="v">'+(a25[1]?brl(a25[1]):'—')+'</div><div class="l">tarifa real média em '+LY+'</div></div>'+
     '<div><div class="cmp '+(cmp==null?'':cmp>0?'up':'dn')+'">'+(cmp==null?'—':pcs(cmp,0)+' vs. Brasil')+'</div><div class="l">média nacional: '+brl(nat)+'</div></div>'+
     '<div><div class="cmp">'+(vr==null?'—':pcs(vr,0))+'</div><div class="l">variação real 2022 a '+LY+' · '+mil(a25[0])+' assentos em '+LY+' (#'+rank+')</div></div></div>';
@@ -678,12 +684,6 @@ function aeroFocusDraw(){
 }
 
 /* ============ tema, navegação, arranque ============ */
-function applyTheme(t){if(t)document.documentElement.setAttribute('data-theme',t);else document.documentElement.removeAttribute('data-theme')}
-try{var saved=localStorage.getItem('tarifas-tema');if(saved)applyTheme(saved)}catch(e){}
-$('#theme').onclick=function(){
-  var cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),nx=cur==='dark'?'light':'dark';
-  applyTheme(nx);try{localStorage.setItem('tarifas-tema',nx)}catch(e){}
-};
 $('#heroMetric').querySelectorAll('button').forEach(function(b){b.onclick=function(){S.hero.metric=b.dataset.v;$('#heroMetric').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});heroDraw()}});
 $('#heroSmooth').onclick=function(){S.hero.smooth=!S.hero.smooth;this.setAttribute('aria-pressed',S.hero.smooth);heroDraw()};
 $('#rSmooth').onclick=function(){S.route.smooth=!S.route.smooth;this.setAttribute('aria-pressed',S.route.smooth);routeDraw()};
@@ -692,21 +692,24 @@ $('#rfind').oninput=function(){S.route.q=noAcc(this.value.trim());routeTable()};
 
 function drawAll(){heroDraw();seasonDraw();distDraw();shareDraw();empLines();routeDraw();caseDraw();mapDraw();aeroFocusDraw()}
 heroText();heroLegend();seasonChips();bandsDraw();distChips();empText();empTable();empMetric();routeSelect();routeTable();caseTabs();aeroSelect();aeroDraw();
-[].slice.call(document.querySelectorAll('.baseLbl')).forEach(function(e){e.textContent=BASE});
+[].slice.call(root.querySelectorAll('.baseLbl')).forEach(function(e){e.textContent=BASE});
 $('#mArq').textContent=D.meta.arquivos;$('#mPer').textContent=D.meta.inicio+' a '+D.meta.fim;
 $('#mIpca').textContent=Object.keys(D.meta.ipca_anual).map(function(y){return y+': '+nfd(2).format(D.meta.ipca_anual[y])+'%'}).join('; ');
 $('#cov').textContent=pc(D.rotas.reduce(function(s,r){return s+r.tot},0)/D.meta.total_assentos,1);
 $('#nRotas').textContent=D.rotas.length;
 $('#mLin').textContent=nf0.format(D.meta.linhas);
 drawAll();
-var rz;window.addEventListener('resize',function(){cancelAnimationFrame(rz);rz=requestAnimationFrame(drawAll)});
-if('ResizeObserver' in window){var lw=0;new ResizeObserver(function(en){var w=Math.round(en[0].contentRect.width);if(w!==lw){lw=w;cancelAnimationFrame(rz);rz=requestAnimationFrame(drawAll)}}).observe($('#heroChart'))}
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){drawAll()});
+var rz;function onRz(){cancelAnimationFrame(rz);rz=requestAnimationFrame(function(){if(vivo)drawAll()})}
+window.addEventListener('resize',onRz);
+var ro=null;if('ResizeObserver' in window){var lw=0;ro=new ResizeObserver(function(en){var w=Math.round(en[0].contentRect.width);if(w!==lw){lw=w;onRz()}});ro.observe($('#heroChart'))}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if(vivo)drawAll()});
 
 /* item ativo na navegação */
-var links=[].slice.call(document.querySelectorAll('#nav a'));
+var links=[].slice.call(root.querySelectorAll('.a1-sub a')),io=null;
 if('IntersectionObserver' in window){
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.setAttribute('aria-current',a.getAttribute('href')==='#'+e.target.id?'true':'false')})}})},{rootMargin:'-30% 0px -60% 0px'});
-  document.querySelectorAll('section[data-nav]').forEach(function(s){io.observe(s)});
+  io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.setAttribute('aria-current',a.getAttribute('href')==='#'+e.target.id?'true':'false')})}})},{rootMargin:'-30% 0px -60% 0px'});
+  root.querySelectorAll('section[data-nav]').forEach(function(s){io.observe(s)});
 }
-})();
+
+return function limpar(){vivo=false;window.removeEventListener('resize',onRz);cancelAnimationFrame(rz);if(ro)ro.disconnect();if(io)io.disconnect();hideTip()};
+}

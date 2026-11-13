@@ -1,5 +1,6 @@
 // Carrega os dados do ARTEF2 no seu Supabase.
-// Uso (na pasta web/):  npm run carregar
+// Uso (na pasta web/):  npm run carregar              (todas as tabelas)
+//                       npm run carregar -- analises  (só as tabelas citadas)
 // Precisa de DATABASE_URL no arquivo .env.local (Supabase > Connect > Session pooler).
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,7 +27,7 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
-const TABELAS = ['macro', 'parametros', 'metricas_modelos', 'rotas', 'rota_empresa', 'eventos', 'aeroporto_mensal',
+const TABELAS = ['analises', 'macro', 'parametros', 'metricas_modelos', 'rotas', 'rota_empresa', 'eventos', 'aeroporto_mensal',
   'previsao_assentos', 'previsao', 'serie_mensal', 'painel'];
 
 const local = /localhost|127\.0\.0\.1/.test(process.env.DATABASE_URL);
@@ -37,7 +38,8 @@ await cliente.query("set statement_timeout = 0");
 console.log('Conectado. Criando/atualizando o esquema...');
 await cliente.query(fs.readFileSync(path.join(raiz, 'supabase', 'schema.sql'), 'utf8'));
 
-for (const t of TABELAS) {
+const so = process.argv.slice(2);
+for (const t of (so.length ? TABELAS.filter((x) => so.includes(x)) : TABELAS)) {
   const arq = path.join(banco, `${t}.csv`);
   if (!fs.existsSync(arq)) { console.warn(`  (sem ${t}.csv, pulando)`); continue; }
   const cab = fs.readFileSync(arq, 'utf8').split('\n', 1)[0].trim();

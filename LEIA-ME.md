@@ -14,6 +14,9 @@ artef2/
 ├── src/                  processamento em Python (agregação, previsão, econometria, segmentos, exportação)
 ├── dados/banco/          CSVs prontos para o banco (já vêm gerados com jan/2015 a set/2026)
 └── web/                  o site (Next.js) e o esquema do banco (web/supabase/schema.sql)
+    ├── app/analises/         telas do ARTEF1 (panorama, casos, sazonalidade, faixas, companhias, rotas, aeroportos)
+    ├── components/analises/  marcação dessas telas
+    └── lib/analises/         gráficos e interação das telas do ARTEF1 (SVG), lendo a tabela analises do banco
 ```
 
 ## 1. Colocar o site no ar (sem rodar Python)
@@ -62,6 +65,7 @@ Não cadastre o `DATABASE_URL` na Vercel: o site só lê com a chave pública.
 2. `uv venv && source .venv/bin/activate && uv pip install -r requirements.txt`
 3. `./rodar_pipeline.sh` (uns 10 minutos; a previsão é a parte lenta)
 4. `cd web && npm run carregar` para subir a nova versão. O site não precisa de novo deploy.
+   Para subir só uma tabela (por exemplo, as análises): `npm run carregar -- analises`.
 
 A IPCA, a PTAX e o querosene em `ext/macro_mensal.csv` cobrem jan/2014 a set/2026. Se entrar mês da ANAC
 depois disso, atualize esse arquivo antes (séries 433 e 3698 do Banco Central; MJFUELUSGULF no FRED).
@@ -71,7 +75,7 @@ depois disso, atualize esse arquivo antes (séries 433 e 3698 do Banco Central; 
 | Script | Entrada | Saída |
 |---|---|---|
 | `agregar.py` | `.zip` da ANAC | `dados/painel.parquet` (rota × companhia × mês), `qualidade.csv` |
-| `analises.py` | `.zip` da ANAC | as oito análises do ARTEF1 para a base completa (`web/public/analises/index.html`); front-end em `analises/` |
+| `analises.py` | `.zip` da ANAC | dados das telas de análise do ARTEF1 para a base completa (`dados/banco/analises.csv`, que vai para a tabela `analises`) |
 | `series.py` | painel + `ext/` | séries mensais de Brasil, companhias e rotas; tabela de rotas |
 | `previsao.py` | séries | validação de 10 modelos em 3 origens, previsões de 18 meses com intervalos |
 | `econometria.py` | painel | repasse do QAV, elasticidade-preço da demanda (VI), HHI × tarifa |
@@ -79,3 +83,9 @@ depois disso, atualize esse arquivo antes (séries 433 e 3698 do Banco Central; 
 | `exportar.py` | tudo acima | `dados/banco/*.csv` |
 
 Os detalhes de método estão na página **Método** do site.
+
+## 4. Visual
+
+O site usa a identidade do ARTEF1 em todas as páginas, com tema claro e escuro (botão da lua no canto do menu; a escolha
+fica salva no navegador). As cores estão em `web/app/globals.css` como variáveis; os gráficos usam essas variáveis,
+então trocam de tema sem recarregar. As fontes (Barlow e Barlow Condensed) vêm junto com o site, sem depender do Google Fonts.

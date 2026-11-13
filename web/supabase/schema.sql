@@ -50,6 +50,9 @@ create table if not exists painel (
   assentos double precision, tarifa_real double precision, tarifa_nominal double precision);
 create index if not exists painel_rota_idx on painel (rota);
 
+-- dados das telas de analise do ARTEF1 na base completa (um bloco JSON por linha; gerado por src/analises.py)
+create table if not exists analises (secao text primary key, dados jsonb not null);
+
 -- cenarios criados pelos usuarios no site
 create table if not exists cenarios (
   id bigint generated always as identity primary key,
@@ -67,7 +70,7 @@ do $$
 declare t text;
 begin
   foreach t in array array['macro','serie_mensal','previsao','previsao_assentos','metricas_modelos','rotas',
-                           'rota_empresa','aeroporto_mensal','eventos','parametros','painel','cenarios'] loop
+                           'rota_empresa','aeroporto_mensal','eventos','parametros','painel','analises','cenarios'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists leitura_publica on %I', t);
     execute format('create policy leitura_publica on %I for select to anon, authenticated using (true)', t);

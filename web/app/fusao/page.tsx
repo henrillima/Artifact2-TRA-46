@@ -85,9 +85,9 @@ export default function PaginaFusao() {
                   <div className="mb-2 font-semibold">Enquadramento das rotas afetadas</div>
                   <div style={{ width: '100%', height: 220 }}>
                     <ResponsiveContainer><BarChart data={classes} layout="vertical" margin={{ left: 40 }}>
-                      <CartesianGrid stroke="#ece8de" horizontal={false} /><XAxis type="number" tick={{ fontSize: 12 }} />
+                      <CartesianGrid stroke="var(--line)" horizontal={false} /><XAxis type="number" tick={{ fontSize: 12 }} />
                       <YAxis type="category" dataKey="classe" width={170} tick={{ fontSize: 12 }} /><Tooltip />
-                      <Bar dataKey="rotas" name="Rotas" fill="#1f6feb" />
+                      <Bar dataKey="rotas" name="Rotas" fill="var(--sig)" />
                     </BarChart></ResponsiveContainer>
                   </div>
                 </div>
@@ -95,10 +95,10 @@ export default function PaginaFusao() {
                   <div className="mb-2 font-semibold">Variação do HHI × efeito na tarifa</div>
                   <div style={{ width: '100%', height: 220 }}>
                     <ResponsiveContainer><ScatterChart margin={{ left: 0, right: 10 }}>
-                      <CartesianGrid stroke="#ece8de" /><XAxis type="number" dataKey="delta" name="Variação do HHI" tick={{ fontSize: 12 }} />
+                      <CartesianGrid stroke="var(--line)" /><XAxis type="number" dataKey="delta" name="Variação do HHI" tick={{ fontSize: 12 }} />
                       <YAxis type="number" dataKey="preco" name="Tarifa (%)" tick={{ fontSize: 12 }} unit="%" /><ZAxis dataKey="ass" range={[20, 300]} />
                       <Tooltip formatter={(v: number, n: string) => [fmtN(v, 1), n]} />
-                      <Scatter data={dispersao} fill={COR[b] ?? '#1f6feb'} fillOpacity={0.6} />
+                      <Scatter data={dispersao} fill={COR[b] ?? 'var(--sig)'} fillOpacity={0.6} />
                     </ScatterChart></ResponsiveContainer>
                   </div>
                 </div>
@@ -118,11 +118,11 @@ export default function PaginaFusao() {
               <tbody>
                 {tabela.map((x) => (
                   <tr key={x.r.rota}>
-                    <td>{x.r.nome} <span className="text-slate-400">{x.r.cidades}</span></td><td className="text-xs">{x.r.segmento ?? '—'}</td>
+                    <td>{x.r.nome} <span className="text-muted">{x.r.cidades}</span></td><td className="text-xs">{x.r.segmento ?? '—'}</td>
                     <td className="text-right">{fmtN(x.r.assentos_12m)}</td>
                     <td className="text-right">{fmtN(100 * (x.s[a] ?? 0), 0)}%</td><td className="text-right">{fmtN(100 * (x.s[b] ?? 0), 0)}%</td>
                     <td className="text-right">{fmtN(10000 * x.hhiPre)}</td><td className="text-right">{fmtN(10000 * x.hhiPos)}</td><td className="text-right">{fmtN(10000 * x.delta)}</td>
-                    <td className={`text-xs ${x.alerta.startsWith('Presun') ? 'text-rose-700' : x.alerta.startsWith('Análise') ? 'text-amber-700' : 'text-slate-500'}`}>{x.alerta}</td>
+                    <td className={`text-xs ${x.alerta.startsWith('Presun') ? 'text-warn' : x.alerta.startsWith('Análise') ? 'text-sun' : 'text-muted'}`}>{x.alerta}</td>
                     <td className="text-right">{fmtP(x.razaoPreco - 1)}{x.saturado ? '*' : ''}</td>
                   </tr>
                 ))}

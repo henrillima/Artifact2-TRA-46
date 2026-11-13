@@ -28,21 +28,21 @@ export default function PaginaCenarios() {
         <button className="botao-sec" onClick={carregar}>Atualizar</button>
       </div>
       <Estado carregando={carregando} erro={erro} />
-      {!carregando && filtrados.length === 0 && <div className="cartao text-slate-500">Nenhum cenário salvo ainda. Use o botão "Salvar" no fim de cada simulador.</div>}
+      {!carregando && filtrados.length === 0 && <div className="cartao text-muted">Nenhum cenário salvo ainda. Use o botão "Salvar" no fim de cada simulador.</div>}
       <div className="grid gap-4 md:grid-cols-2">
         {filtrados.map((c) => (
           <div key={c.id} className="cartao">
             <div className="flex items-baseline justify-between gap-2">
-              <div className="font-semibold">{c.nome}</div><span className="rounded bg-slate-100 px-2 py-0.5 text-xs">{TIPOS[c.tipo] ?? c.tipo}</span>
+              <div className="font-semibold">{c.nome}</div><span className="rounded bg-soft px-2 py-0.5 text-xs">{TIPOS[c.tipo] ?? c.tipo}</span>
             </div>
             <div className="nota">por {c.autor} · {new Date(c.criado_em).toLocaleString('pt-BR')}</div>
             {c.resumo && (
               <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                {Object.entries(c.resumo).map(([k, v]) => (<Fragment key={k}><dt className="text-slate-500">{k.replaceAll('_', ' ')}</dt><dd className="text-right tabular-nums">{fmtValor(k, v)}</dd></Fragment>))}
+                {Object.entries(c.resumo).map(([k, v]) => (<Fragment key={k}><dt className="text-muted">{k.replaceAll('_', ' ')}</dt><dd className="text-right tabular-nums">{fmtValor(k, v)}</dd></Fragment>))}
               </dl>
             )}
-            <details className="mt-2"><summary className="cursor-pointer text-xs text-slate-500">parâmetros</summary>
-              <pre className="mt-1 overflow-auto rounded bg-slate-50 p-2 text-xs">{JSON.stringify(c.parametros, null, 2)}</pre></details>
+            <details className="mt-2"><summary className="cursor-pointer text-xs text-muted">parâmetros</summary>
+              <pre className="mt-1 overflow-auto rounded bg-soft p-2 text-xs">{JSON.stringify(c.parametros, null, 2)}</pre></details>
           </div>
         ))}
       </div>

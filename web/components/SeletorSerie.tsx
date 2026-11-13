@@ -44,11 +44,11 @@ export default function SeletorSerie({ valor, onChange, soComModelo = false }: {
           <div className="relative">
             <input className="campo w-full" placeholder="Buscar qualquer rota (ex.: POA, Recife, SBKP)" value={q} onChange={(e) => setQ(e.target.value)} />
             {achadas.length > 0 && (
-              <div className="absolute z-10 mt-1 max-h-64 w-full overflow-auto rounded-lg border border-linha bg-white shadow">
+              <div className="absolute z-10 mt-1 max-h-64 w-full overflow-auto rounded-lg border border-linha bg-surface shadow-lg">
                 {achadas.map((r) => (
-                  <button key={r.rota} className="block w-full px-3 py-1.5 text-left text-sm hover:bg-slate-50"
+                  <button key={r.rota} className="block w-full px-3 py-1.5 text-left text-sm hover:bg-soft"
                     onClick={() => { escolherRota(r); setQ(''); setAchadas([]); }}>
-                    {r.nome} — {r.cidades} <span className="text-slate-400">(#{r.rank})</span>
+                    {r.nome} — {r.cidades} <span className="text-muted">(#{r.rank})</span>
                   </button>
                 ))}
               </div>
@@ -56,7 +56,7 @@ export default function SeletorSerie({ valor, onChange, soComModelo = false }: {
           </div>
         )}
       </div>
-      <div className="text-sm text-slate-600">Selecionada: <b>{tituloEscolha(valor)}</b></div>
+      <div className="text-sm text-muted">Selecionada: <b>{tituloEscolha(valor)}</b></div>
     </div>
   );
 }

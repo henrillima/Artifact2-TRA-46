@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Grafico, { Ponto } from '@/components/Grafico';
 import SeletorSerie, { Escolha, tituloEscolha } from '@/components/SeletorSerie';
 import { Controle, Deslizante, Estado, Kpi, SalvarCenario, Titulo, COR } from '@/components/ui';
-import { getMetricas, Metrica, serieRotaEmpresa } from '@/lib/dados';
+import { getMetricas, getRota, getTopRotas, Metrica, serieRotaEmpresa } from '@/lib/dados';
 import { NOMES_MODELOS, useSerie } from '@/lib/hooks';
 import { fmtMes, fmtN, fmtP, fmtR } from '@/lib/sim';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -18,6 +18,16 @@ export default function PaginaPrevisao() {
   const [metricas, setMetricas] = useState<Metrica[]>([]);
   const [porEmpresa, setPorEmpresa] = useState<{ periodo: string; grupo: string; tarifa_real: number; assentos: number }[]>([]);
   useEffect(() => { getMetricas().then(setMetricas).catch(() => {}); }, []);
+  // links vindos das análises: /previsao?rota=SBGR-SBRF ou /previsao?empresa=LATAM
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const emp = q.get('empresa'), rota = q.get('rota');
+    if (emp && ['LATAM', 'Gol', 'Azul', 'Outras'].includes(emp)) setEscolha({ nivel: 'empresa', chave: emp, titulo: '' });
+    else if (rota) {
+      getTopRotas(300).then((top) => top.find((r) => r.rota === rota) ?? getRota(rota))
+        .then((r) => { if (r) setEscolha({ nivel: 'rota', chave: r.rota, rota: r, titulo: '' }); }).catch(() => {});
+    }
+  }, []);
   useEffect(() => {
     if (escolha.nivel !== 'rota') { setPorEmpresa([]); return; }
     serieRotaEmpresa(escolha.chave).then(setPorEmpresa).catch(() => setPorEmpresa([]));
@@ -80,7 +90,7 @@ export default function PaginaPrevisao() {
             <div className="cartao">
               <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
                 <div className="font-semibold">{tituloEscolha(escolha)} · {NOMES_MODELOS[m] ?? m}</div>
-                {hierarquico && <span className="rounded bg-amber-50 px-2 py-0.5 text-xs text-amber-800">rota sem modelo próprio: previsão hierárquica</span>}
+                {hierarquico && <span className="selo selo-aviso">rota sem modelo próprio: previsão hierárquica</span>}
               </div>
               <Grafico pontos={pontos} formato={(v) => fmtR(v)} corte={ult} faixas={faixas} rotulos={{ real: 'Tarifa real observada' }} />
             </div>
@@ -111,7 +121,7 @@ export default function PaginaPrevisao() {
                 <thead><tr><th>Modelo</th><th className="text-right">Erro médio (MAPE)</th><th className="text-right">Previsões testadas</th></tr></thead>
                 <tbody>
                   {tabMet.map((x) => (
-                    <tr key={x.modelo} className={x.modelo === m ? 'bg-sky-50' : ''}>
+                    <tr key={x.modelo} className={x.modelo === m ? 'bg-soft' : ''}>
                       <td>{x.nome}</td><td className="text-right">{fmtN(100 * x.mape, 1)}%</td><td className="text-right">{fmtN(x.n)}</td>
                     </tr>
                   ))}
@@ -138,12 +148,12 @@ export default function PaginaPrevisao() {
               <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>
                   <LineChart data={dadosEmp}>
-                    <CartesianGrid stroke="#ece8de" vertical={false} />
+                    <CartesianGrid stroke="var(--line)" vertical={false} />
                     <XAxis dataKey="periodo" tickFormatter={fmtMes} minTickGap={28} tick={{ fontSize: 12 }} />
                     <YAxis tickFormatter={(v) => fmtR(v)} width={84} tick={{ fontSize: 12 }} />
                     <Tooltip labelFormatter={(l) => fmtMes(String(l))} formatter={(v: number) => fmtR(v)} />
                     <Legend />
-                    {grupos.map((g) => <Line key={g} dataKey={g} stroke={COR[g] ?? '#334155'} dot={false} strokeWidth={2} connectNulls isAnimationActive={false} />)}
+                    {grupos.map((g) => <Line key={g} dataKey={g} stroke={COR[g] ?? 'var(--nom)'} dot={false} strokeWidth={2} connectNulls isAnimationActive={false} />)}
                   </LineChart>
                 </ResponsiveContainer>
               </div>

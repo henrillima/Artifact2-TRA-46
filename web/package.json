@@ -10,6 +10,8 @@
     "carregar": "node scripts/carregar.mjs"
   },
   "dependencies": {
+    "@fontsource/barlow": "5.2.5",
+    "@fontsource/barlow-condensed": "5.2.5",
     "@supabase/supabase-js": "2.45.4",
     "next": "14.2.35",
     "react": "18.3.1",

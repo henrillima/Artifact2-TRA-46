@@ -102,3 +102,25 @@ export async function previsaoHierarquica(serie: SerieMes[]): Promise<Prev[]> {
       hi80: y * Math.exp(q['0.9']), hi95: y * Math.exp(q['0.975']), melhor: true };
   });
 }
+
+/**
+ * Dados das telas de análise do ARTEF1 (base completa). Ficam na tabela "analises", uma linha por bloco
+ * (meta, meses, nac, anual, rotas, aero, casos...). Se o banco ainda não tiver a tabela, usa a cópia estática
+ * gerada pelo mesmo script (public/dados/analises.json).
+ */
+export const getAnalises = () => memo('analises', async () => {
+  try {
+    const { data, error } = await supabase.from('analises').select('secao, dados');
+    if (error) throw error;
+    if (data && data.length) return Object.fromEntries(data.map((r) => [r.secao, r.dados])) as Record<string, any>;
+  } catch { /* cai para a cópia estática */ }
+  const r = await fetch('/dados/analises.json');
+  if (!r.ok) throw new Error('dados das análises indisponíveis');
+  return (await r.json()) as Record<string, any>;
+});
+
+export const getRota = (chave: string) => memo(`rota:${chave}`, async () => {
+  const { data, error } = await supabase.from('rotas').select('*').eq('rota', chave).limit(1);
+  if (error) throw error;
+  return ((data ?? [])[0] ?? null) as Rota | null;
+});

@@ -1,21 +1,48 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { Titulo } from '@/components/ui';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Secoes from '@/components/analises/Secoes';
+import { Estado } from '@/components/ui';
+import { getAnalises } from '@/lib/dados';
+import { montarPainel } from '@/lib/analises/painel';
+import './analises.css';
+
+const SECOES = [
+  ['panorama', 'Panorama'], ['casos', 'Casos reais'], ['sazonalidade', 'Sazonalidade'], ['faixas', 'Faixas de preço'],
+  ['companhias', 'Companhias'], ['rotas', 'Rotas'], ['aeroportos', 'Aeroportos'], ['metodo', 'Como ler'],
+];
 
 export default function Analises() {
-  const [src, setSrc] = useState('/analises/index.html');
-  useEffect(() => { if (window.location.hash) setSrc('/analises/index.html' + window.location.hash); }, []);
+  const raiz = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const [dados, setDados] = useState<Record<string, any> | null>(null);
+  const [erro, setErro] = useState<string | null>(null);
+
+  useEffect(() => { getAnalises().then(setDados).catch((e) => setErro((e as Error).message)); }, []);
+
+  useEffect(() => {
+    if (!dados || !raiz.current) return;
+    const el = raiz.current;
+    const limpar = montarPainel(el, dados);
+    // links gerados pelos gráficos (rota → previsão, aeroporto → demanda) navegam dentro do site, sem recarregar
+    const interno = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest('a[data-interno]') as HTMLAnchorElement | null;
+      if (a && !e.metaKey && !e.ctrlKey) { e.preventDefault(); router.push(a.getAttribute('href') as string); }
+    };
+    el.addEventListener('click', interno);
+    if (window.location.hash) el.querySelector(window.location.hash)?.scrollIntoView();
+    return () => { el.removeEventListener('click', interno); limpar(); };
+  }, [dados, router]);
+
   return (
-    <div className="space-y-4">
-      <Titulo titulo="Análises"
-        sub={<>Todas as análises do ARTEF1 (panorama, casos reais, sazonalidade, faixas de preço, companhias, rotas, aeroportos e método),
-          agora sobre a base completa: jan/2015 a set/2026, em R$ de set/2026, com a Avianca separada e um caso novo sobre a saída dela em 2019.</>} />
-      <div className="flex flex-wrap items-center gap-3 text-sm">
-        <a className="botao-sec" href={src} target="_blank" rel="noreferrer">Abrir em tela cheia ↗</a>
-        <span className="nota">Mesma base, mesma limpeza e mesmo mês de referência dos módulos de previsão e cenários.</span>
+    <div className="a1" ref={raiz}>
+      <div className="a1-sub">
+        <nav aria-label="Seções das análises">
+          {SECOES.map(([id, t]) => <a key={id} href={`#${id}`}>{t}</a>)}
+        </nav>
       </div>
-      <iframe src={src} title="Análises da base completa" className="w-full rounded-xl border border-linha bg-white"
-        style={{ height: 'calc(100vh - 120px)', minHeight: 640 }} />
+      <div id="tip" role="tooltip" />
+      {!dados ? <div className="a1-carregando"><Estado carregando={!erro} erro={erro} /></div> : <Secoes />}
     </div>
   );
 }

@@ -2,15 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --fonte: 'Inter', 'Segoe UI', 'Helvetica Neue'; }
-body { @apply bg-areia text-tinta antialiased; }
-.cartao { @apply bg-white rounded-xl border border-linha p-5 shadow-sm; }
-.rotulo { @apply text-xs font-semibold uppercase tracking-wide text-slate-500; }
-.botao { @apply inline-flex items-center gap-2 rounded-lg bg-tinta px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50; }
-.botao-sec { @apply inline-flex items-center gap-2 rounded-lg border border-linha bg-white px-3 py-1.5 text-sm hover:bg-slate-50; }
-.campo { @apply rounded-lg border border-linha bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ceu/40; }
-.tabela { @apply w-full text-sm; }
-.tabela th { @apply text-left font-semibold text-slate-600 border-b border-linha py-2 px-2 whitespace-nowrap; }
-.tabela td { @apply border-b border-linha/70 py-1.5 px-2 tabular-nums; }
-.nota { @apply text-xs text-slate-500 leading-relaxed; }
-input[type=range] { accent-color: #1f6feb; }
+/* Identidade visual do ARTEF1, agora no site todo (tema claro e escuro). */
+:root {
+  --f-disp: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Barlow", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --bg: #EEF2F7; --surface: #FFFFFF; --ink: #0C1B2E; --muted: #556579; --line: #D1DAE5; --soft: #E7EDF4;
+  --sig: #0A8FA0; --sig-ink: #08707D; --nom: #8391A6; --warn: #DA531A; --cool: #2B77BD; --sun: #F2B705; --focus: #1F5BD6;
+  --tam: #C8102E; --glo: #F26B1D; --azu: #1F5BD6; --one: #7C3AED; --out: #93A1B5;
+  --b1: #A9DADE; --b2: #6FB8C7; --b3: #4290B3; --b4: #2B6899; --b5: #26407C; --b6: #2D2160;
+  --bt1: #0C1B2E; --bt2: #0C1B2E; --bt3: #FFFFFF; --bt4: #FFFFFF; --bt5: #FFFFFF; --bt6: #FFFFFF;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #08131F; --surface: #0E2033; --ink: #E7EEF7; --muted: #96A7BC; --line: #223850; --soft: #132A41;
+    --sig: #36C6D6; --sig-ink: #5ED4E1; --nom: #7F90A8; --warn: #FF7A3D; --cool: #5AA2E8; --sun: #FFCB3D; --focus: #8DB4FF;
+    --tam: #FF5772; --glo: #FF9147; --azu: #6C9BFF; --one: #B794F6; --out: #7D8DA3;
+    --b1: #BDE9EC; --b2: #83CAD6; --b3: #52A8CB; --b4: #3F86C6; --b5: #7A66D8; --b6: #B767D6;
+    --bt1: #08131F; --bt2: #08131F; --bt3: #08131F; --bt4: #08131F; --bt5: #08131F; --bt6: #08131F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #08131F; --surface: #0E2033; --ink: #E7EEF7; --muted: #96A7BC; --line: #223850; --soft: #132A41;
+  --sig: #36C6D6; --sig-ink: #5ED4E1; --nom: #7F90A8; --warn: #FF7A3D; --cool: #5AA2E8; --sun: #FFCB3D; --focus: #8DB4FF;
+  --tam: #FF5772; --glo: #FF9147; --azu: #6C9BFF; --one: #B794F6; --out: #7D8DA3;
+  --b1: #BDE9EC; --b2: #83CAD6; --b3: #52A8CB; --b4: #3F86C6; --b5: #7A66D8; --b6: #B767D6;
+  --bt1: #08131F; --bt2: #08131F; --bt3: #08131F; --bt4: #08131F; --bt5: #08131F; --bt6: #08131F;
+  color-scheme: dark;
+}
+
+html { background: var(--bg); scroll-padding-top: 128px; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--f-body); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--f-disp); font-weight: 600; line-height: 1.05; letter-spacing: 0; }
+a { color: inherit; }
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.cartao { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.rotulo { font: 600 .78rem/1.2 var(--f-body); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.botao { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; background: var(--ink); color: var(--bg);
+  padding: 8px 16px; font: 600 .92rem/1 var(--f-body); border: 1px solid var(--ink); cursor: pointer; }
+.botao:hover { opacity: .9; }
+.botao:disabled { opacity: .45; cursor: default; }
+.botao-sec { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--muted); padding: 8px 14px; font: 600 .92rem/1 var(--f-body); cursor: pointer; }
+.botao-sec:hover { color: var(--ink); border-color: var(--ink); }
+.campo { border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 9px 12px; font-size: .92rem; }
+.campo:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+.tabela { width: 100%; font-size: .9rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.tabela th { text-align: left; font: 600 .82rem var(--f-body); color: var(--muted); border-bottom: 1px solid var(--line); padding: 8px; white-space: nowrap; }
+.tabela td { border-bottom: 1px solid var(--soft); padding: 7px 8px; }
+.nota { font-size: .82rem; color: var(--muted); line-height: 1.55; }
+.selo { display: inline-flex; align-items: center; border-radius: 999px; padding: 3px 10px; font: 600 .74rem/1.2 var(--f-body); white-space: nowrap; }
+.selo-novo { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.selo-a1 { background: color-mix(in srgb, var(--sig) 16%, transparent); color: var(--sig-ink); }
+.selo-aviso { background: color-mix(in srgb, var(--sun) 22%, transparent); color: var(--ink); }
+input[type=range] { accent-color: var(--sig); }
+select option { background: var(--surface); color: var(--ink); }
+
+/* gráficos Recharts seguem o tema */
+.recharts-cartesian-axis-tick-value, .recharts-label { fill: var(--muted); font-family: var(--f-body); }
+.recharts-cartesian-axis-line, .recharts-cartesian-axis-tick-line { stroke: var(--line); }
+.recharts-default-tooltip { background: var(--surface) !important; border: 1px solid var(--line) !important; border-radius: 10px; color: var(--ink); }
+.recharts-tooltip-label { color: var(--ink); font-weight: 600; }
+.recharts-legend-item-text { color: var(--ink) !important; }
+.recharts-tooltip-cursor { fill: var(--soft); stroke: var(--line); }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+/* barra superior (mesma do ARTEF1) */
+.topo { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.marca { font: 600 1.35rem/1 var(--f-disp); white-space: nowrap; text-decoration: none; }
+.marca span { color: var(--sig-ink); }
+.menu { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin-left: auto; }
+.menu::-webkit-scrollbar { display: none; }
+.menu a { font: 500 .92rem/1 var(--f-body); color: var(--muted); text-decoration: none; padding: 9px 10px; border-radius: 999px; white-space: nowrap; }
+.menu a:hover { color: var(--ink); }
+.menu a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+.tema { flex: none; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); cursor: pointer; display: grid; place-items: center; }
+.tema svg { width: 18px; height: 18px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 760px) { .marca { display: none; } .menu { margin-left: 0; } }

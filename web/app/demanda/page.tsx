@@ -30,6 +30,11 @@ export default function PaginaDemanda() {
       .then(([e, a, s, p, pa]) => { setEventos(e); setAero(a); setBr({ serie: s, prev: p, ass: pa }); })
       .catch((x) => setErro((x as Error).message));
   }, []);
+  // link vindo das análises: /demanda?aeroporto=SBPA
+  useEffect(() => {
+    const ic = new URLSearchParams(window.location.search).get('aeroporto');
+    if (ic && aero.some((x) => x.icao === ic)) { setEscopo(ic); setAeroGraf(ic); }
+  }, [aero]);
 
   const aeroportos = useMemo(() => {
     const m = new Map<string, { icao: string; nome: string; mov: number }>();
@@ -140,11 +145,11 @@ export default function PaginaDemanda() {
               </select>
               <div style={{ width: '100%', height: 260 }}>
                 <ResponsiveContainer><ComposedChart data={serieAero}>
-                  <CartesianGrid stroke="#ece8de" vertical={false} /><XAxis dataKey="periodo" tickFormatter={fmtMes} minTickGap={28} tick={{ fontSize: 12 }} />
+                  <CartesianGrid stroke="var(--line)" vertical={false} /><XAxis dataKey="periodo" tickFormatter={fmtMes} minTickGap={28} tick={{ fontSize: 12 }} />
                   <YAxis tick={{ fontSize: 12 }} unit="%" width={60} /><Tooltip labelFormatter={(l) => fmtMes(String(l))} formatter={(v: number) => fmtN(v, 0) + '%'} />
-                  <ReferenceLine y={0} stroke="#94a3b8" />
-                  <Line dataKey="rel" name="Assentos: variação em 12 meses relativa à do Brasil" stroke="#14213d" dot={false} isAnimationActive={false} />
-                  <Scatter dataKey="anom" name="Anomalia" fill="#e11d48" />
+                  <ReferenceLine y={0} stroke="var(--nom)" />
+                  <Line dataKey="rel" name="Assentos: variação em 12 meses relativa à do Brasil" stroke="var(--ink)" dot={false} isAnimationActive={false} />
+                  <Scatter dataKey="anom" name="Anomalia" fill="var(--warn)" />
                 </ComposedChart></ResponsiveContainer>
               </div>
               <p className="nota">Eixo limitado entre −95% e +300%. Floresta de isolamento sobre quatro atributos (variação em 12 meses de assentos e tarifa, absoluta e relativa ao Brasil) dos 40 maiores aeroportos; 2% dos meses classificados como anômalos.</p>
@@ -154,8 +159,8 @@ export default function PaginaDemanda() {
               <table className="tabela">
                 <thead><tr><th>Mês</th><th>Aeroporto</th><th className="text-right">Assentos vs. Brasil</th><th className="text-right">Tarifa vs. Brasil</th><th className="text-right">Escore</th></tr></thead>
                 <tbody>{anom.slice(0, 40).map((x) => (
-                  <tr key={x.icao + x.periodo} className="cursor-pointer hover:bg-slate-50" onClick={() => setAeroGraf(x.icao)}>
-                    <td>{fmtMes(x.periodo)}</td><td>{x.aeroporto} <span className="text-slate-400">{x.cidade}</span></td>
+                  <tr key={x.icao + x.periodo} className="cursor-pointer hover:bg-soft" onClick={() => setAeroGraf(x.icao)}>
+                    <td>{fmtMes(x.periodo)}</td><td>{x.aeroporto} <span className="text-muted">{x.cidade}</span></td>
                     <td className="text-right">{fmtRel(x.rel_mov)}</td><td className="text-right">{fmtRel(x.rel_tarifa)}</td>
                     <td className="text-right">{fmtN(x.escore_isolamento, 2)}</td></tr>))}
                 </tbody>
