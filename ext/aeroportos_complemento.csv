@@ -1,0 +1,151 @@
+icao,cidade,iata,lat,lon,fonte
+SBAE,Bauru,JTC,-22.15783,-49.06833,airportsdata SBAE
+SBAQ,Araraquara,AQA,-21.812,-48.133,airportsdata SBAQ
+SBAT,Alta Floresta,AFL,-9.86639,-56.105,airportsdata SBAT
+SBAU,Araçatuba,ARU,-21.1413,-50.4247,airportsdata SBAU
+SBAX,Araxá,AAX,-19.5632,-46.9604,airportsdata SBAX
+SBBG,Bagé,BGX,-31.3905,-54.1122,airportsdata SBBG
+SBBT,Barretos,BAT,-20.5845,-48.5941,airportsdata SBBT
+SBBW,Barra do Garças,BPG,-15.8613,-52.3889,airportsdata SBBW
+SBBZ,Cabo Frio,BZC,-22.771,-41.9629,airportsdata SBBZ
+SBCB,Cabo Frio,CFB,-22.9217,-42.0743,airportsdata SBCB
+SBCJ,Carajás,CKS,-6.11528,-50.00139,airportsdata SBCJ
+SBCN,Caldas Novas,CLV,-17.7253,-48.6075,airportsdata SBCN
+SBCP,Campos dos Goytacazes,CAW,-21.6983,-41.3017,airportsdata SBCP
+SBCR,Corumbá,CMG,-19.01194,-57.67139,airportsdata SBCR
+SBCZ,Cruzeiro do Sul,CZS,-7.59991,-72.7695,airportsdata SBCZ
+SBDB,Bonito,BYO,-21.22944,-56.45611,airportsdata SBDB
+SBDO,Dourados,DOU,-22.2019,-54.9266,airportsdata SSDO
+SBFC,Franca,FRC,-20.5922,-47.3829,airportsdata SIMK
+SBGU,Guarapuava,GPB,-25.3875,-51.5202,airportsdata SBGU
+SBGV,Governador Valadares,GVR,-18.8952,-41.9822,airportsdata SBGV
+SBIH,Itaituba,ITB,-4.24234,-56.0007,airportsdata SBIH
+SBIP,Ipatinga,IPN,-19.4707,-42.4876,airportsdata SBIP
+SBJA,Jaguaruna,JJG,-28.67528,-49.06028,airportsdata SBJA
+SBJD,Jundiaí,,-23.18037,-46.94441,airportsdata SBJD
+SBJI,Ji-Paraná,JPR,-10.8708,-61.8465,airportsdata SWJI
+SBJR,Rio de Janeiro,,-22.9875,-43.37,airportsdata SBJR
+SBLE,Lençóis,LEC,-12.4823,-41.277,airportsdata SBLE
+SBLJ,Lages,LAJ,-27.7821,-50.2815,airportsdata SBLJ
+SBMD,Almeirim,MEU,-0.88984,-52.6022,airportsdata SBMD
+SBME,Macaé,MEA,-22.343,-41.766,airportsdata SBME
+SBML,Marília,MII,-22.1969,-49.9264,airportsdata SBML
+SBMS,Mossoró,MVF,-5.20192,-37.3643,airportsdata SBMS
+SBMY,Manicoré,MNX,-5.81138,-61.2783,airportsdata SBMY
+SBNM,Santo Angelo,GEL,-28.2817,-54.1691,airportsdata SBNM
+SBNT,Parnamirim,,-5.91142,-35.2477,airportsdata SBNT
+SBPB,Parnaíba,PHB,-2.89375,-41.732,airportsdata SBPB
+SBPG,Paranaguá,PNG,-25.5401,-48.5312,airportsdata SSPG
+SBPK,Pelotas,PET,-31.7184,-52.3277,airportsdata SBPK
+SBPO,Pato Branco,PTO,-26.2178,-52.6943,airportsdata SSPB
+SBPP,Ponta Porã,PMG,-22.5496,-55.7026,airportsdata SBPP
+SBRD,Rondonópolis,ROO,-16.586,-54.7248,airportsdata SWRD
+SBSI,Sinop,OPS,-11.885,-55.58611,airportsdata SWSI
+SBSJ,São José dos Campos,SJK,-23.2292,-45.8615,airportsdata SBSJ
+SBSM,Santa Maria,RIA,-29.7114,-53.6882,airportsdata SBSM
+SBTB,Oriximiná,TMT,-1.4896,-56.3968,airportsdata SBTB
+SBTC,Una,UNA,-15.3552,-38.999,airportsdata SBTC
+SBTD,Toledo,TOW,-24.6863,-53.6975,airportsdata SBTD
+SBTF,Tefé,TFF,-3.38294,-64.7241,airportsdata SBTF
+SBTG,Três Lagoas,TJL,-20.75444,-51.68389,airportsdata SBTG
+SBTU,Tucuruí,TUR,-3.78601,-49.7203,airportsdata SBTU
+SBUA,São Gabriel da Cachoeira,SJL,-0.14835,-66.9855,airportsdata SBUA
+SBUF,Paulo Afonso,PAV,-9.40088,-38.2506,airportsdata SBUF
+SBUG,Uruguaiana,URG,-29.7822,-57.0382,airportsdata SBUG
+SBUR,Uberaba,UBA,-19.76472,-47.96611,airportsdata SBUR
+SBVG,Varginha,VAG,-21.5901,-45.4733,airportsdata SBVG
+SBVH,Vilhena,BVH,-12.6944,-60.0983,airportsdata SBVH
+SBZM,Juiz de Fora,IZA,-21.51306,-43.17306,airportsdata SBZM
+SDAG,Angra dos Reis,,-22.9753,-44.3071,airportsdata SDAG
+SDCG,São Paulo de Olivença,OLC,-3.46793,-68.92041,airportsdata SDCG
+SDIM,Itanhaém,,-24.16472,-46.78556,airportsdata SDIM
+SDLO,Cairu,PBA,-13.5648,-38.94,airportsdata SDLO
+SDOW,Ourilândia do Norte,OIA,-6.7631,-51.0499,airportsdata SDOW
+SDTK,Paraty,,-23.2244,-44.7203,airportsdata SDTK
+SDUB,Ubatuba,UBT,-23.4411,-45.0756,airportsdata SDUB
+SDWQ,Alenquer,ALT,-1.916944,-54.722778,airportsdata SDWQ
+SILC,Lucas do Rio Verde,LVR,-13.03786,-55.95025,airportsdata SILC
+SIMK,Franca,FRC,-20.5922,-47.3829,airportsdata SIMK
+SIRI,Maraú,,-13.90361,-38.93583,airportsdata SIRI
+SIZX,Juara,JUA,-11.28667,-57.53889,airportsdata SIZX
+SJHG,Confresa,CFO,-10.6344,-51.5636,airportsdata SJHG
+SJZA,Tapes,,-30.67639,-51.52528,airportsdata SJZA
+SNAB,Araripina,JAW,-7.58676,-40.5355,airportsdata SNAB
+SNBR,Barreiras,BRA,-12.0789,-45.009,airportsdata SNBR
+SNCL,Cairu,MXQ,-13.38944,-38.91,airportsdata SNCL
+SNCP,Carutapera,CTP,-1.25028,-46.01722,airportsdata SNCP
+SNDV,Divinópolis,DIQ,-20.1807,-44.8709,airportsdata SNDV
+SNEB,Paragominas,,-3.02528,-47.31694,airportsdata SNEB
+SNEE,Camaçari,,-12.80586,-38.24375,airportsdata SNEE
+SNGA,Guarapari,GUZ,-20.6465,-40.4919,airportsdata SNGA
+SNGI,Guanambi,GNM,-14.2082,-42.7461,airportsdata SNGI
+SNGN,Garanhuns,QGP,-8.83428,-36.4716,airportsdata SNGN
+SNHS,Serra Talhada,,-8.0624,-38.3288,airportsdata SNHS
+SNIG,Iguatu,QIG,-6.34664,-39.2938,airportsdata SNIG
+SNJD,Feira de Santana,FEC,-12.2003,-38.9068,airportsdata SNJD
+SNJM,Manhuaçu,,-20.25972,-42.18389,airportsdata SNJM
+SNLN,Linhares,,-19.3552,-40.0695,airportsdata SNLN
+SNMA,Monte Alegre,MTE,-1.9958,-54.0742,airportsdata SNMA
+SNMZ,Porto de Moz,PTQ,-1.74145,-52.2361,airportsdata SNMZ
+SNOB,Sobral,QBX,-3.67889,-40.3368,airportsdata SNOB
+SNOX,Oriximiná,ORX,-1.71408,-55.8362,airportsdata SNOX
+SNPD,Patos de Minas,POJ,-18.6728,-46.4912,airportsdata SNPD
+SNRJ,Brejo,,-3.66694,-42.83389,airportsdata SNRJ
+SNRU,Caruaru,CAU,-8.28239,-36.0135,airportsdata SNRU
+SNSM,Salinópolis,OPP,-0.69566,-47.3347,airportsdata SNSM
+SNSS,Salinas,,-16.2083,-42.322,airportsdata SNSS
+SNTF,Teixeira de Freitas,TXF,-17.5245,-39.6685,airportsdata SNTF
+SNTI,Óbidos,OBI,-1.86717,-55.5144,airportsdata SNTI
+SNTO,Teófilo Otoni,TFL,-17.8923,-41.5136,airportsdata SNTO
+SNTS,Patos,,-7.03899,-37.2516,airportsdata SNTS
+SNVB,Valença,VAL,-13.2965,-38.9924,airportsdata SNVB
+SNVS,Breves,BVS,-1.63653,-50.4436,airportsdata SNVS
+SNWS,Crateús,,-5.21135,-40.7042,airportsdata SNWS
+SNYA,Almeirim,GGF,-1.49194,-52.57833,airportsdata SNYA
+SNZR,Paracatu,,-17.2426,-46.8831,airportsdata SNZR
+SSAP,Apucarana,APU,-23.6095,-51.3845,airportsdata SSAP
+SSBZ,Sapiranga,,-29.67611,-50.98139,airportsdata SSBZ
+SSCN,Canela,CEL,-29.3702,-50.832,airportsdata SSCN
+SSCP,Cornélio Procópio,CKO,-23.1525,-50.6025,airportsdata SSCP
+SSCT,Cianorte,GGH,-23.6915,-52.6419,airportsdata SSCT
+SSER,Erechim,ERM,-27.6619,-52.2683,airportsdata SSER
+SSFB,Francisco Beltrão,FBE,-26.0592,-53.0635,airportsdata SSFB
+SSGG,Porto Murtinho,,-21.02778,-57.49722,airportsdata SSGG
+SSGY,Guaíra,QGA,-24.0811,-54.1917,airportsdata SSGY
+SSKM,Campo Mourão,CBW,-24.0092,-52.3568,airportsdata SSKM
+SSKW,Cacoal,OAL,-11.4955,-61.45083,airportsdata SSKW
+SSLT,Alegrete,ALQ,-29.8127,-55.8934,airportsdata SSLT
+SSOG,Arapongas,APX,-23.3529,-51.4917,airportsdata SSOG
+SSOU,Aripuanã,AIR,-10.1855,-59.45783,airportsdata SSOU
+SSPB,Pato Branco,PTO,-26.2178,-52.6943,airportsdata SSPB
+SSPG,Paranaguá,PNG,-25.5401,-48.5312,airportsdata SSPG
+SSPI,Paranavaí,PVI,-23.0899,-52.4885,airportsdata SSPI
+SSRS,Barreirinhas,BRB,-2.75556,-42.81,airportsdata SSRS
+SSSB,São Borja,QOJ,-28.6549,-56.0346,airportsdata SSSB
+SSSC,Santa Cruz do Sul,CSU,-29.6841,-52.4122,airportsdata SSSC
+SSTE,Torres,TSQ,-29.4149,-49.81,airportsdata SSTE
+SSUM,Umuarama,UMU,-23.7987,-53.3138,airportsdata SSUM
+SSUV,União da Vitória,QVB,-26.2334,-51.0678,airportsdata SSUV
+SSVL,Caarapó,,-22.52167,-54.67778,airportsdata SSVL
+SSZR,Santa Rosa,SRA,-27.9067,-54.5204,airportsdata SSZR
+SSZW,Ponta Grossa,PGZ,-25.1847,-50.1441,airportsdata SSZW
+SWBC,Barcelos,BAZ,-0.98129,-62.9196,airportsdata SWBC
+SWBG,Pontes e Lacerda,,-15.2,-59.38722,airportsdata SWBG
+SWBR,Borba,RBB,-4.40634,-59.6024,airportsdata SWBR
+SWCA,Carauari,CAF,-4.87152,-66.8975,airportsdata SWCA
+SWEI,Eirunepé,ERN,-6.63953,-69.8798,airportsdata SWEI
+SWEK,Canarana,CQA,-13.57444,-52.27056,airportsdata SWEK
+SWFX,São Félix do Araguaia,SXO,-11.6324,-50.6896,airportsdata SWFX
+SWGN,Araguaína,AUX,-7.22787,-48.2405,airportsdata SWGN
+SWHP,Água Boa,GGB,-14.01944,-52.15222,airportsdata SWHP
+SWJN,Juína,JIA,-11.41944,-58.70167,airportsdata SWJN
+SWKO,Coari,CIZ,-4.13406,-63.1326,airportsdata SWKO
+SWKQ,São Raimundo Nonato,NSR,-9.08278,-42.64444,airportsdata SWKQ
+SWLB,Lábrea,LBR,-7.27897,-64.7695,airportsdata SWLB
+SWLC,Rio Verde,RVD,-17.83472,-50.95611,airportsdata SWLC
+SWMW,Maués,MBZ,-3.37217,-57.7248,airportsdata SWMW
+SWPY,Primavera do Leste,,-15.56556,-54.33778,airportsdata SWPY
+SWSI,Sinop,OPS,-11.885,-55.58611,airportsdata SWSI
+SWTP,Santa Isabel do Rio Negro,IRZ,-0.41694,-65.03389,airportsdata SWTP
+SWTS,Tangará da Serra,TGQ,-14.662,-57.4435,airportsdata SWTS
+SWYN,Apuí,,-7.17287,-59.8396,airportsdata SWYN

@@ -1,0 +1,12 @@
+raw/
+_to_delete/
+__pycache__/
+dados/saida/
+dados/banco/
+dados/*.parquet
+.venv/
+.DS_Store
+node_modules/
+.next/
+.env.local
+.vercel
