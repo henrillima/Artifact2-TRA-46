@@ -17,6 +17,7 @@ Saída de uma companhia: o caso da Avianca (2019) e a simulação da saída de u
 Saída: dados/saida/saida.json e dados/saida/saida_rotas.csv
 """
 import json
+import os
 
 import numpy as np
 import pandas as pd
@@ -28,7 +29,8 @@ INI, FIM = '2017-01', '2020-02'                 # janela sem a pandemia
 PRE = ('2017-07', '2018-06')                    # 12 meses antes da contração da Avianca (que começa em jul/2018)
 CONTRACAO = '2018-07'                           # vendas da Avianca caem a partir de jul/2018; pedido de RJ em dez/2018
 MIN_ROTA = 500                                  # assentos/mês da rota no pré-período
-MIN_AVI = 300                                   # Avianca "opera" a rota (Oliveira e Lucinda, 2024)
+MIN_AVI = int(os.environ.get('SAIDA_MIN_AVI', 300))   # Avianca "opera" a rota (Oliveira e Lucinda, 2024); robustez: SAIDA_MIN_AVI=200
+SUFIXO = os.environ.get('SAIDA_SUFIXO', '')          # robustez grava em saida<SUFIXO>.json sem tocar na versão principal
 JANELA = range(-27, 11)                         # meses relativos à saída (abr/2019 para quase todas: -27 = jan/2017, +10 = fev/2020)
 REF = -10                                       # mês de referência: jun/2018, o último antes da contração
 K_PRE = range(-21, -9)                          # meses do período pré (jul/2017 a jun/2018) nas saídas de abril/2019
@@ -310,8 +312,9 @@ def main():
     res['projecao'] = proj
     res['cobertura_300'] = float(att.assentos.iloc[:300].sum() / att.assentos.sum())
     res['rotas_tratadas'] = rt.reset_index().rename(columns={'index': 'rota'}).round(5).to_dict(orient='records')
-    (SAIDA / 'saida.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=float))
-    pd.DataFrame(linhas).to_csv(SAIDA / 'saida_rotas.csv', index=False)
+    (SAIDA / f'saida{SUFIXO}.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=float))
+    if not SUFIXO:
+        pd.DataFrame(linhas).to_csv(SAIDA / 'saida_rotas.csv', index=False)
 
 
 if __name__ == '__main__':
