@@ -12,6 +12,7 @@ const CARTOES = [
   ['/previsao', 'Previsão da tarifa', 'Dez modelos (de suavização exponencial a redes neurais) competem em validação fora da amostra; escolha Brasil, companhia ou qualquer rota.'],
   ['/custos', 'Choque de custos', 'Mexa no querosene e no câmbio e veja o repasse para a tarifa e a reação da demanda, com elasticidades estimadas nos dados.'],
   ['/fusao', 'Fusão e concentração', 'Junte duas companhias e veja o HHI por rota, o enquadramento no guia do CADE e o efeito previsto na tarifa.'],
+  ['/saida', 'Saída de uma companhia', 'O que aconteceu com tarifa e concentração depois da saída da Avianca, e o que aconteceria hoje se a Azul ou a Gol saísse.'],
   ['/demanda', 'Choques de demanda', 'Replique a pandemia ou a enchente no RS com outra intensidade, ou desenhe um choque, no Brasil ou num aeroporto.'],
   ['/segmentos', 'Segmentos de rotas', 'Agrupamento das 300 maiores rotas por k-médias, a partir de distância, densidade, sazonalidade e concentração.'],
   ['/cenarios', 'Cenários salvos', 'Simulações gravadas no banco pelo grupo, para comparar hipóteses e citar no artigo.'],

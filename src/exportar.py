@@ -73,6 +73,9 @@ def main():
     par['hiperparametros'] = json.loads((SAIDA / 'hiperparametros.json').read_text())
     par['erros_dist'] = json.loads((SAIDA / 'erros_dist.json').read_text())
     par['anomalias_avaliacao'] = json.loads((SAIDA / 'anomalias_avaliacao.json').read_text())
+    # saída de uma companhia: estudo de eventos da Avianca, calibração e simulação da saída de Azul e Gol (PAPER)
+    if (SAIDA / 'saida.json').exists():
+        par['saida'] = json.loads((SAIDA / 'saida.json').read_text())
     from base import macro
     par['ponte_qav'] = macro().attrs['ponte']
     p, _, base = carregar()

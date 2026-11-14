@@ -37,7 +37,7 @@ def demean2(df, cols, g1, g2, w=None, iters=50, tol=1e-10):
     return out
 
 
-def ols_cluster(X, y, cl, w=None):
+def ols_cluster(X, y, cl, w=None, vcov=False):
     X, y = np.asarray(X, float), np.asarray(y, float)
     if w is None:
         w = np.ones(len(y))
@@ -53,6 +53,8 @@ def ols_cluster(X, y, cl, w=None):
         meat += np.outer(s, s)
     G = len(np.unique(cl))
     V = XtXi @ meat @ XtXi * G / (G - 1)
+    if vcov:
+        return b, np.sqrt(np.diag(V)), V
     return b, np.sqrt(np.diag(V))
 
 
