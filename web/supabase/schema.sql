@@ -22,7 +22,11 @@ create table if not exists previsao_assentos (
 
 create table if not exists metricas_modelos (
   modelo text, nivel text, mape double precision, rmse_log double precision, n int, nome text, rank double precision,
+  mae double precision, rmse double precision,
   primary key (modelo, nivel));
+-- colunas novas em bancos ja criados (MAE e RMSE em R$)
+alter table metricas_modelos add column if not exists mae double precision;
+alter table metricas_modelos add column if not exists rmse double precision;
 
 create table if not exists rotas (
   rota text primary key, origem text, destino text, nome text, cidades text, distancia_km double precision,
@@ -38,7 +42,12 @@ create table if not exists aeroporto_mensal (
   icao text, aeroporto text, cidade text, periodo text, mov double precision, tarifa double precision,
   yoy_mov double precision, yoy_tarifa double precision, rel_mov double precision, rel_tarifa double precision,
   z_robusto double precision, escore_isolamento double precision, anomalo boolean,
+  escore_lof double precision, escore_kmedias double precision, escore_gmm double precision, evento_conhecido boolean,
   primary key (icao, periodo));
+alter table aeroporto_mensal add column if not exists escore_lof double precision;
+alter table aeroporto_mensal add column if not exists escore_kmedias double precision;
+alter table aeroporto_mensal add column if not exists escore_gmm double precision;
+alter table aeroporto_mensal add column if not exists evento_conhecido boolean;
 
 create table if not exists eventos (
   id text primary key, nome text, escopo text, aeroporto text, inicio text, nota text, trajetoria jsonb);

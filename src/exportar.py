@@ -58,7 +58,8 @@ def main():
     an = pd.read_csv(SAIDA / 'anomalias.csv')
     an.rename(columns={'aero': 'icao'})[['icao', 'aeroporto', 'cidade', 'periodo', 'mov', 'tarifa', 'yoy_mov',
                                           'yoy_tarifa', 'rel_mov', 'rel_tarifa', 'z_robusto', 'escore_isolamento',
-                                          'anomalo']].to_csv(BANCO / 'aeroporto_mensal.csv', index=False)
+                                          'anomalo', 'escore_lof', 'escore_kmedias', 'escore_gmm',
+                                          'evento_conhecido']].to_csv(BANCO / 'aeroporto_mensal.csv', index=False)
 
     ev = json.loads((SAIDA / 'eventos.json').read_text())
     pd.DataFrame([{'id': e['id'], 'nome': e['nome'], 'escopo': e['escopo'], 'aeroporto': e.get('aeroporto'),
@@ -67,6 +68,11 @@ def main():
 
     par = json.loads((SAIDA / 'parametros.json').read_text())
     par['clusters'] = json.loads((SAIDA / 'clusters.json').read_text())
+    # selecao de modelos e avaliacao (TRA-48): hiperparametros escolhidos por CV, distribuicao dos erros,
+    # avaliacao dos detectores de anomalia e dos classificadores
+    par['hiperparametros'] = json.loads((SAIDA / 'hiperparametros.json').read_text())
+    par['erros_dist'] = json.loads((SAIDA / 'erros_dist.json').read_text())
+    par['anomalias_avaliacao'] = json.loads((SAIDA / 'anomalias_avaliacao.json').read_text())
     from base import macro
     par['ponte_qav'] = macro().attrs['ponte']
     p, _, base = carregar()

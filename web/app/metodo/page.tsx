@@ -34,13 +34,17 @@ export default function Metodo() {
           hierárquico (previsão nacional × nível relativo da série); e sete modelos supervisionados treinados em conjunto sobre todas as séries — regressão ridge, árvore de decisão,
           floresta aleatória, gradient boosting, k vizinhos mais próximos, máquina de vetores de suporte e rede neural (MLP). Os supervisionados preveem o desvio do log da tarifa
           em relação à média dos 12 meses anteriores a partir de defasagens, mês do ano, variação do QAV e um indicador da pandemia, de forma recursiva.</p>
-        <p>Validação com origem móvel: três cortes, cada um prevendo 12 meses sem ver o período testado. O modelo padrão de cada série é o de menor erro percentual médio nessa validação.
+        <p>Hiperparâmetros (Aulas 4 e 5): dentro da base de treino de cada corte, validação cruzada k-fold com k = 5, em blocos de meses consecutivos. Escolhidos assim: o k do kNN,
+          o kernel (linear ou radial) e o C do SVM, o número de neurônios da rede, a poda da árvore pelo custo-complexidade (o equivalente ao cv.tree com prune.tree do Lab 4) e a penalidade da ridge.
+          Floresta aleatória e gradient boosting, que não fazem parte da disciplina, ficam com valores fixos.</p>
+        <p>Validação com origem móvel: três cortes, cada um prevendo 12 meses sem ver o período testado. Métricas da Aula 4: MAPE, MAE e RMSE (em R$), além do histograma e do boxplot dos erros
+          na página Previsão. O modelo padrão de cada série é o de menor erro percentual médio nessa validação.
           Os intervalos de 80% e 95% vêm dos erros de validação de cada modelo em cada nível (Brasil, companhias, rotas): o erro em log é dividido pela raiz do horizonte, tomam-se os quantis empíricos e o resultado é multiplicado de volta pela raiz do horizonte, de modo que a faixa abre conforme a previsão se afasta.</p>
         <div className="overflow-x-auto">
-          <table className="tabela"><thead><tr><th>Modelo</th>{niveis.map((n) => <th key={n} className="text-right">MAPE {n === 'brasil' ? 'Brasil' : n === 'empresa' ? 'companhias' : 'rotas'}</th>)}<th className="text-right">MAPE geral</th></tr></thead>
+          <table className="tabela"><thead><tr><th>Modelo</th>{niveis.map((n) => <th key={n} className="text-right">MAPE {n === 'brasil' ? 'Brasil' : n === 'empresa' ? 'companhias' : 'rotas'}</th>)}<th className="text-right">MAPE geral</th><th className="text-right">MAE geral</th><th className="text-right">RMSE geral</th></tr></thead>
             <tbody>{tab.map((m) => (
               <tr key={m.modelo}><td>{m.nome}</td>{niveis.map((n) => { const x = met.find((y) => y.modelo === m.modelo && y.nivel === n); return <td key={n} className="text-right">{x ? fmtN(100 * x.mape, 1) + '%' : '—'}</td>; })}
-                <td className="text-right font-semibold">{fmtN(100 * m.mape, 1)}%</td></tr>))}</tbody></table>
+                <td className="text-right font-semibold">{fmtN(100 * m.mape, 1)}%</td><td className="text-right">{m.mae != null ? 'R$ ' + fmtN(m.mae) : '—'}</td><td className="text-right">{m.rmse != null ? 'R$ ' + fmtN(m.rmse) : '—'}</td></tr>))}</tbody></table>
         </div>
         <p>Leitura dos resultados: na série Brasil, o melhor modelo erra em média {fmtN(100 * menor('brasil'), 1)}% e o sazonal ingênuo, {fmtN(100 * (met.find((x) => x.modelo === 'ingenuo' && x.nivel === 'brasil')?.mape ?? NaN), 1)}%;
           nas rotas, a tarifa média mensal é ruidosa e o melhor modelo erra {fmtN(100 * menor('rota'), 1)}% em até 12 meses.
@@ -50,8 +54,10 @@ export default function Metodo() {
         <Secao t="Parâmetros econômicos estimados (painel de rotas)">
           <table className="tabela"><thead><tr><th>Parâmetro</th><th className="text-right">Estimativa</th><th className="text-right">Erro-padrão</th><th>Como foi estimado</th></tr></thead>
             <tbody>
-              <tr><td>Repasse do QAV para a tarifa (elasticidade)</td><td className="text-right">{fmtN(par.repasse.elasticidade_media, 3)}</td><td className="text-right">{fmtN(par.repasse.ep, 3)}</td><td className="text-xs">{par.repasse.nota}</td></tr>
-              <tr><td>Elasticidade-preço da demanda (variáveis instrumentais)</td><td className="text-right">{fmtN(par.demanda.elasticidade_2sls_nacional, 3)}</td><td className="text-right">{fmtN(par.demanda.ep_nacional, 3)}</td><td className="text-xs">{par.demanda.nota_nacional} F do primeiro estágio: {fmtN(par.demanda.F_nacional, 1)}.</td></tr>
+              <tr><td>Repasse do QAV para a tarifa (elasticidade)</td><td className="text-right">{fmtN(par.repasse.elasticidade_media, 3)}</td><td className="text-right">{fmtN(par.repasse.ep, 3)}</td><td className="text-xs">{par.repasse.nota}
+                {par.bootstrap && <> Bootstrap por rota ({par.bootstrap.B} reamostragens): intervalo de 95% de {fmtN(par.bootstrap.repasse.ic95[0], 3)} a {fmtN(par.bootstrap.repasse.ic95[1], 3)}.</>}</td></tr>
+              <tr><td>Elasticidade-preço da demanda (variáveis instrumentais)</td><td className="text-right">{fmtN(par.demanda.elasticidade_2sls_nacional, 3)}</td><td className="text-right">{fmtN(par.demanda.ep_nacional, 3)}</td><td className="text-xs">{par.demanda.nota_nacional} F do primeiro estágio: {fmtN(par.demanda.F_nacional, 1)}.
+                {par.bootstrap && <> Bootstrap por rota: intervalo de 95% de {fmtN(par.bootstrap.elasticidade_nacional.ic95[0], 2)} a {fmtN(par.bootstrap.elasticidade_nacional.ic95[1], 2)}.</>}</td></tr>
               {par.demanda.robustez && (<>
                 <tr><td className="pl-6">Mesmo instrumento, só de 2020 em diante</td><td className="text-right">{fmtN(par.demanda.robustez.tendencia_desde_2020.elasticidade, 3)}</td><td className="text-right">{fmtN(par.demanda.robustez.tendencia_desde_2020.ep, 3)}</td><td className="text-xs">Robustez. F do primeiro estágio: {fmtN(par.demanda.robustez.tendencia_desde_2020.F, 1)}.</td></tr>
                 <tr><td className="pl-6">Mesmo instrumento, com efeito fixo de ano</td><td className="text-right">{fmtN(par.demanda.robustez.ano_fe_amostra_toda.elasticidade, 2)}</td><td className="text-right">{fmtN(par.demanda.robustez.ano_fe_amostra_toda.ep, 2)}</td><td className="text-xs">Robustez. F do primeiro estágio: {fmtN(par.demanda.robustez.ano_fe_amostra_toda.F, 1)}{par.demanda.robustez.ano_fe_amostra_toda.F < 10 ? ' (instrumento fraco: sobra pouca variação do QAV dentro de cada ano)' : ''}.</td></tr>
@@ -61,12 +67,19 @@ export default function Metodo() {
               <tr><td>HHI e tarifa na mesma rota (associação)</td><td className="text-right">{fmtN(par.hhi.semi_elasticidade, 3)}</td><td className="text-right">{fmtN(par.hhi.ep, 3)}</td><td className="text-xs">{par.hhi.nota} Por isso o simulador de fusão usa o modelo de Cournot, não esta regressão.</td></tr>
             </tbody></table>
           <p>Amostra: {par.amostra.rotas} rotas com pelo menos 36 meses e distância conhecida, {fmtN(par.amostra.obs)} observações rota-mês.</p>
+          {par.bootstrap && <p>Bootstrap (Aula 1): sorteamos as {par.amostra.rotas} rotas com reposição {par.bootstrap.B} vezes, refazemos a estimação em cada amostra e tomamos os percentis 2,5 e 97,5.
+            Como as observações de uma mesma rota são correlacionadas no tempo, reamostramos rotas inteiras, não meses. O erro-padrão do bootstrap ({fmtN(par.bootstrap.repasse.ep_boot, 3)} no repasse;
+            {' '}{fmtN(par.bootstrap.elasticidade_nacional.ep_boot, 2)} na elasticidade) fica perto do erro-padrão robusto por rota da tabela, o que dá confiança nos dois.</p>}
         </Secao>
       )}
       <Secao t="Segmentos e anomalias (aprendizado não supervisionado)">
-        <p>Segmentos: k-médias sobre sete atributos padronizados das 300 maiores rotas; k escolhido pela silhueta e conferido por mistura gaussiana. Anomalias: floresta de isolamento sobre
-          a variação em 12 meses de assentos e tarifas dos 40 maiores aeroportos, absoluta e relativa ao Brasil, com 2% dos meses classificados como anômalos. Os eventos detectados
-          (pandemia, enchente no RS, o salto atípico de movimento no Galeão em 2024) alimentam a biblioteca de choques.</p>
+        <p>Segmentos (Aulas 2 e 3): k-médias (k-means++, várias inicializações) sobre sete atributos padronizados das 300 maiores rotas. O k sai da silhueta, com o cotovelo ao lado; a partição é
+          conferida com clusterização hierárquica (distância euclidiana; ligações média, completa, simples e de Ward) e com mistura gaussiana estimada por EM, com o número de componentes escolhido pelo BIC.
+          A concordância entre métodos é medida pelo índice de Rand ajustado, e a PCA mostra os grupos em duas dimensões. Correlograma e boxplots por segmento descrevem os atributos (Aula 1).</p>
+        <p>Anomalias (Aula 6): variação em 12 meses de assentos e tarifas dos 40 maiores aeroportos, absoluta e relativa ao Brasil. Quatro enfoques: estatístico (mistura gaussiana e escore robusto pela
+          mediana e MAD), densidade (LOF), clusterização (distância ao centroide do k-médias) e, como extra, floresta de isolamento. Com eventos conhecidos como rótulos (pandemia e enchente no RS),
+          medimos precisão, recall, F1 e a curva ROC de cada detector, e treinamos classificadores supervisionados com classes desbalanceadas, como no Lab 6: regressão logística, árvore podada por
+          validação cruzada e SVM, com pesos inversos à frequência de cada classe e divisão 75%/25%. Os eventos detectados (pandemia, enchente no RS, o salto de movimento no Galeão em 2024) alimentam a biblioteca de choques.</p>
       </Secao>
       <Secao t="Limitações">
         <ul className="list-disc space-y-1 pl-5">

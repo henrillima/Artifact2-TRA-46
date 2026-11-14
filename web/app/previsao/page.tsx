@@ -7,10 +7,11 @@ import { getMetricas, getRota, getTopRotas, Metrica, serieRotaEmpresa } from '@/
 import { NOMES_MODELOS, useSerie } from '@/lib/hooks';
 import { fmtMes, fmtN, fmtP, fmtR } from '@/lib/sim';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Boxplots, Histograma } from '@/components/Avaliacao';
 
 export default function PaginaPrevisao() {
   const [escolha, setEscolha] = useState<Escolha>({ nivel: 'brasil', chave: 'BR', titulo: '' });
-  const { serie, prev, carregando, erro, hierarquico } = useSerie(escolha);
+  const { serie, prev, carregando, erro, hierarquico, par } = useSerie(escolha);
   const [modelo, setModelo] = useState<string>('');
   const [horiz, setHoriz] = useState(12);
   const [faixas, setFaixas] = useState<'80' | '95' | 'ambas' | 'nenhuma'>('ambas');
@@ -60,6 +61,14 @@ export default function PaginaPrevisao() {
 
   const nivelMet = escolha.nivel;
   const tabMet = metricas.filter((x) => x.nivel === nivelMet).sort((a, b) => a.mape - b.mape);
+  const dist = (par?.erros_dist ?? {}) as Record<string, any>;
+  const distSel = dist[`${m}|${nivelMet}`];
+  const hip = par?.hiperparametros;
+  const hipFinal = hip?.final?.[m];
+  const hipOrigens = hip ? Object.entries(hip.origens as Record<string, any>).map(([o, v]) => [o, v[m]?.escolhido] as const).filter(([, e]) => e && Object.keys(e).length) : [];
+  const fmtHip = (p: Record<string, any>) => Object.entries(p).map(([k, v]) => k === 'ccp_alpha' ? `alfa de poda ${fmtN(Number(v) * 1000, 2)}×10⁻³`
+    : k === 'neuronios' ? `${(v as number[]).join(' + ')} neurônios` : k === 'k' ? `k = ${v}` : k === 'alpha' ? `penalidade ${fmtN(Number(v), 1)}`
+    : k === 'kernel' ? `kernel ${v}` : k === 'C' ? `C = ${fmtN(Number(v), 1)}` : `${k} = ${v}`).join(', ');
 
   const grupos = Array.from(new Set(porEmpresa.map((x) => x.grupo)));
   const dadosEmp = useMemo(() => {
@@ -118,16 +127,20 @@ export default function PaginaPrevisao() {
             <div className="cartao overflow-x-auto">
               <div className="mb-2 font-semibold">Seleção de modelos — erro na validação ({nivelMet === 'brasil' ? 'série Brasil' : nivelMet === 'empresa' ? 'séries de companhias' : 'séries de rotas'})</div>
               <table className="tabela">
-                <thead><tr><th>Modelo</th><th className="text-right">Erro médio (MAPE)</th><th className="text-right">Previsões testadas</th></tr></thead>
+                <thead><tr><th>Modelo</th><th className="text-right">MAPE</th><th className="text-right">MAE</th><th className="text-right">RMSE</th><th className="text-right">Previsões</th></tr></thead>
                 <tbody>
                   {tabMet.map((x) => (
-                    <tr key={x.modelo} className={x.modelo === m ? 'bg-soft' : ''}>
-                      <td>{x.nome}</td><td className="text-right">{fmtN(100 * x.mape, 1)}%</td><td className="text-right">{fmtN(x.n)}</td>
+                    <tr key={x.modelo} className={x.modelo === m ? 'bg-soft' : ''} style={{ cursor: modelos.includes(x.modelo) ? 'pointer' : undefined }}
+                      onClick={() => modelos.includes(x.modelo) && setModelo(x.modelo)}>
+                      <td>{x.nome}</td><td className="text-right">{fmtN(100 * x.mape, 1)}%</td>
+                      <td className="text-right">{x.mae != null ? fmtR(x.mae) : '—'}</td><td className="text-right">{x.rmse != null ? fmtR(x.rmse) : '—'}</td>
+                      <td className="text-right">{fmtN(x.n)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <p className="nota mt-2">Validação com três origens móveis (cada uma prevendo 12 meses à frente sem ver os dados do período testado). MAPE = erro percentual absoluto médio.</p>
+              <p className="nota mt-2">Validação com três origens móveis (cada uma prevendo 12 meses à frente sem ver os dados do período testado). Métricas da Aula 4:
+                MAPE = erro percentual absoluto médio; MAE = erro absoluto médio; RMSE = raiz do erro quadrático médio (em R$ de tarifa real). Clique num modelo para vê-lo no gráfico.</p>
             </div>
             <div className="cartao overflow-x-auto">
               <div className="mb-2 font-semibold">Previsão mês a mês</div>
@@ -142,6 +155,48 @@ export default function PaginaPrevisao() {
               </table>
             </div>
           </div>
+          {distSel && (
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="cartao">
+                <h3 className="mb-1 text-[1.3rem]">Distribuição dos erros · {NOMES_MODELOS[m] ?? m}</h3>
+                <p className="nota mb-2">Erro percentual de cada previsão da validação (previsto ÷ real − 1), {nivelMet === 'brasil' ? 'série Brasil' : nivelMet === 'empresa' ? 'séries de companhias' : 'séries de rotas'}.
+                  Mediana {fmtP(distSel.mediana)}; metade dos erros entre {fmtP(distSel.q1)} e {fmtP(distSel.q3)}.</p>
+                <Histograma hist={distSel.hist} />
+              </div>
+              <div className="cartao">
+                <h3 className="mb-1 text-[1.3rem]">Boxplot dos erros por modelo</h3>
+                <p className="nota mb-2">Mesmo recorte; caixa do 1º ao 3º quartil, bigodes até 1,5 × IQR. Modelos com caixa estreita e centrada no zero erram menos e sem viés.</p>
+                <Boxplots dominio={[-0.4, 0.4]} destaque={NOMES_MODELOS[m] ?? m}
+                  itens={tabMet.filter((x) => dist[`${x.modelo}|${nivelMet}`]).map((x) => ({ nome: NOMES_MODELOS[x.modelo] ?? x.nome, caixa: dist[`${x.modelo}|${nivelMet}`],
+                    cor: x.modelo === m ? 'var(--warn)' : 'var(--sig)' }))} />
+              </div>
+            </div>
+          )}
+          {hip && (
+            <div className="cartao">
+              <h3 className="mb-1 text-[1.3rem]">Hiperparâmetros escolhidos por validação cruzada · {NOMES_MODELOS[m] ?? m}</h3>
+              {hipFinal && hipFinal.grade?.length ? (
+                <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
+                  <div className="overflow-x-auto">
+                    <table className="tabela">
+                      <thead><tr><th>Valor testado</th><th className="text-right">Erro na validação cruzada (RMSE, log)</th></tr></thead>
+                      <tbody>{(hipFinal.grade as any[]).map((g, i) => {
+                        const esc = JSON.stringify(g.param) === JSON.stringify(hipFinal.escolhido);
+                        return <tr key={i} className={esc ? 'bg-soft' : ''}><td>{fmtHip(g.param)}{esc ? '  ← escolhido' : ''}</td><td className="text-right">{fmtN(g.rmse_cv, 4)}</td></tr>;
+                      })}</tbody>
+                    </table>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="rotulo">Escolha em cada origem da validação</div>
+                    {hipOrigens.map(([o, e]) => <div key={o} className="flex justify-between gap-2"><span>até {fmtMes(o)}</span><span className="text-right font-semibold">{fmtHip(e as any)}</span></div>)}
+                    <div className="flex justify-between gap-2"><span>modelo publicado</span><span className="text-right font-semibold">{fmtHip(hipFinal.escolhido)}</span></div>
+                  </div>
+                </div>
+              ) : <p className="nota">Este modelo não tem hiperparâmetros ajustados por validação cruzada (Holt-Winters e sazonal ingênuo são estimados direto na série; floresta e boosting, extras fora da disciplina, ficam com valores fixos).</p>}
+              <p className="nota mt-2">Como nas Aulas 4 e 5: k-fold com k = {hip.k_folds} dentro da base de treino de cada origem. Os folds são blocos de meses consecutivos, para que meses vizinhos não fiquem um no treino e outro na validação.
+                Grades: k do kNN (5 a 60), kernel linear ou radial e C do SVM, neurônios da rede (8 a 64 + 32), poda da árvore pelo custo-complexidade (equivalente ao cv.tree do Lab 4) e penalidade da ridge.</p>
+            </div>
+          )}
           {escolha.nivel === 'rota' && dadosEmp.length > 0 && (
             <div className="cartao">
               <div className="mb-2 font-semibold">Quem cobra quanto nesta rota (tarifa real por companhia, consulta direta ao banco)</div>

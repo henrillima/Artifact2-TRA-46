@@ -77,9 +77,9 @@ depois disso, atualize esse arquivo antes (séries 433 e 3698 do Banco Central; 
 | `agregar.py` | `.zip` da ANAC | `dados/painel.parquet` (rota × companhia × mês), `qualidade.csv` |
 | `analises.py` | `.zip` da ANAC | dados das telas de análise do ARTEF1 para a base completa (`dados/banco/analises.csv`, que vai para a tabela `analises`) |
 | `series.py` | painel + `ext/` | séries mensais de Brasil, companhias e rotas; tabela de rotas |
-| `previsao.py` | séries | validação de 10 modelos em 3 origens, previsões de 18 meses com intervalos |
-| `econometria.py` | painel | repasse do QAV, elasticidade-preço da demanda (VI), HHI × tarifa |
-| `padroes.py` | painel | segmentos de rotas (k-médias), anomalias por aeroporto, eventos |
+| `previsao.py` | séries | 10 modelos com hiperparâmetros por validação cruzada (5 folds), validação em 3 origens com MAPE, MAE e RMSE, previsões de 18 meses com intervalos |
+| `econometria.py` | painel | repasse do QAV, elasticidade-preço da demanda (VI), HHI × tarifa, bootstrap por rota |
+| `padroes.py` | painel | segmentos de rotas (k-médias, hierárquica, mistura gaussiana com BIC, PCA), anomalias por aeroporto (mistura gaussiana, LOF, k-médias, floresta de isolamento) avaliadas contra eventos conhecidos, classificadores com classes desbalanceadas, eventos |
 | `exportar.py` | tudo acima | `dados/banco/*.csv` |
 
 Os detalhes de método estão na página **Método** do site.

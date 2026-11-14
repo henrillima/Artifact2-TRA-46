@@ -4,7 +4,7 @@ export type Nivel = 'brasil' | 'empresa' | 'rota';
 export type SerieMes = { periodo: string; assentos: number; tarifa_real: number; tarifa_nominal: number; hhi: number | null };
 export type Prev = { modelo: string; periodo: string; h: number; previsto: number; lo80: number; hi80: number; lo95: number; hi95: number; melhor: boolean };
 export type PrevAssentos = { periodo: string; h: number; assentos: number };
-export type Metrica = { modelo: string; nivel: string; mape: number; rmse_log: number; n: number; nome: string; rank: number };
+export type Metrica = { modelo: string; nivel: string; mape: number; rmse_log: number; n: number; nome: string; rank: number; mae?: number | null; rmse?: number | null };
 export type Rota = {
   rota: string; origem: string; destino: string; nome: string; cidades: string; distancia_km: number | null;
   assentos_12m: number; tarifa_real_12m: number; hhi_12m: number | null; rank: number; cluster: number | null;
@@ -14,6 +14,7 @@ export type RotaEmpresa = { rota: string; grupo: string; assentos: number; tarif
 export type AeroMes = {
   icao: string; aeroporto: string; cidade: string; periodo: string; mov: number; tarifa: number; yoy_mov: number;
   rel_mov: number; rel_tarifa: number; z_robusto: number | null; escore_isolamento: number; anomalo: boolean;
+  escore_lof?: number | null; escore_kmedias?: number | null; escore_gmm?: number | null; evento_conhecido?: boolean | null;
 };
 export type Evento = { id: string; nome: string; escopo: string; aeroporto: string | null; inicio: string; nota: string;
   trajetoria: { k: number; periodo: string; assentos: number; tarifa: number }[] };

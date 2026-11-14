@@ -7,6 +7,8 @@ Parametros economicos dos simuladores (painel rota x mes, valores reais):
    com efeitos fixos de rota e de mes (o nivel nacional do QAV e absorvido pelo efeito de mes; identifica-se
    pela exposicao diferente das rotas ao custo de combustivel).
 3. Associacao entre concentracao (HHI) e tarifa na mesma rota ao longo do tempo (efeitos fixos de rota e mes).
+4. Bootstrap (TRA-48, Aula 1): reamostragem das rotas com reposicao (bootstrap por cluster, B = 999) para o
+   repasse e para a elasticidade com instrumento nacional; intervalos de 95% pelos percentis.
 
 Saida: dados/saida/parametros.json
 """
@@ -179,6 +181,37 @@ def main():
     res['hhi'] = {'semi_elasticidade': float(b3[0]), 'ep': float(se3[0]),
                   'nota': 'ln(tarifa real) no HHI (0 a 1) da rota; efeitos fixos de rota e de mês; fora da pandemia. '
                           'Associação: o HHI é endógeno (entrada e saída respondem a demanda e custo).'}
+    # ---- 4. Bootstrap por rota. Os dados ja estao sem o efeito fixo de rota, que nao muda quando as rotas sao
+    #          reamostradas; por isso basta empilhar as linhas das rotas sorteadas e refazer a estimacao.
+    B = 999
+    rng = np.random.default_rng(2026)
+    linhas = [np.flatnonzero(cl == g) for g in range(cl.max() + 1)]
+    Xr, yr, wr = dm[X.columns].values, dm.ly.values, r.assentos.values
+    lq_, ly_, z_ = dm4.lq.values, dm4.ly.values, dm4.z.values
+    kms = (400, 800, 1500, 2500)
+    ldm = np.log(r.dist).mean()
+    rep_b, rep_km, el_b = [], {km: [] for km in kms}, []
+    for _ in range(B):
+        idx = np.concatenate([linhas[g] for g in rng.integers(0, len(linhas), len(linhas))])
+        sw = np.sqrt(wr[idx])
+        bb = np.linalg.lstsq(Xr[idx] * sw[:, None], yr[idx] * sw, rcond=None)[0]
+        rep_b.append(bb[0])
+        for km in kms:
+            rep_km[km].append(bb[0] + bb[1] * (np.log(km) - ldm))
+        Wb = Wm[idx]
+        Pb = lambda v: v - Wb @ np.linalg.lstsq(Wb, v, rcond=None)[0]
+        q_, y_, zz = Pb(lq_[idx]), Pb(ly_[idx]), Pb(z_[idx])
+        xh = zz * ((zz @ y_) / (zz @ zz))
+        el_b.append((xh @ q_) / (xh @ y_))
+    ic = lambda v: [float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))]
+    res['bootstrap'] = {
+        'B': B, 'metodo': 'reamostragem das rotas com reposição (bootstrap por cluster); intervalo de 95% pelos percentis 2,5 e 97,5',
+        'repasse': {'estimativa': float(b[0]), 'ep_boot': float(np.std(rep_b, ddof=1)), 'ic95': ic(rep_b),
+                    **{f'ic95_{km}km': ic(rep_km[km]) for km in kms}},
+        'elasticidade_nacional': {'estimativa': float(beta4), 'ep_boot': float(np.std(el_b, ddof=1)), 'ic95': ic(el_b)},
+        'histogramas': {'repasse': np.histogram(rep_b, bins=30)[0].tolist(), 'repasse_bordas': np.histogram(rep_b, bins=30)[1].tolist(),
+                        'elasticidade': np.histogram(el_b, bins=30)[0].tolist(), 'elasticidade_bordas': np.histogram(el_b, bins=30)[1].tolist()},
+    }
     (SAIDA / 'parametros.json').write_text(json.dumps(res, indent=2, ensure_ascii=False))
     print(json.dumps(res, indent=2, ensure_ascii=False))
 

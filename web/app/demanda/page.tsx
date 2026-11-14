@@ -2,8 +2,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveContainer, Scatter, Tooltip, XAxis, YAxis } from 'recharts';
 import Grafico, { Ponto } from '@/components/Grafico';
+import { CurvasROC, MatrizConfusao } from '@/components/Avaliacao';
 import { Controle, Deslizante, Estado, Kpi, SalvarCenario, Titulo } from '@/components/ui';
-import { AeroMes, Evento, getAeroportos, getEventos, getPrevAssentos, getPrevisao, getSerie, Prev, PrevAssentos, SerieMes } from '@/lib/dados';
+import { AeroMes, Evento, getAeroportos, getEventos, getParametros, getPrevAssentos, getPrevisao, getSerie, Prev, PrevAssentos, SerieMes } from '@/lib/dados';
 import { assentosIngenuo } from '@/lib/hooks';
 import { fmtMes, fmtN, fmtP, fmtR, intensificar, respostaTarifaEvento, Trajetoria, trajetoriaPersonalizada } from '@/lib/sim';
 
@@ -24,6 +25,10 @@ export default function PaginaDemanda() {
   const [resp, setResp] = useState<number | null>(null);
   const [inicio, setInicio] = useState(1);
   const [aeroGraf, setAeroGraf] = useState('SBPA');
+  const [detector, setDetector] = useState<'isolamento' | 'lof' | 'kmedias' | 'gmm'>('isolamento');
+  const [classif, setClassif] = useState('svm');
+  const [aval, setAval] = useState<Record<string, any> | null>(null);
+  useEffect(() => { getParametros().then((p) => setAval(p.anomalias_avaliacao ?? null)).catch(() => {}); }, []);
 
   useEffect(() => {
     Promise.all([getEventos(), getAeroportos(), getSerie('brasil', 'BR'), getPrevisao('brasil', 'BR'), getPrevAssentos('brasil', 'BR')])
@@ -80,10 +85,18 @@ export default function PaginaDemanda() {
   const ptsA: Ponto[] = base ? [...base.serie.slice(-24).map((s) => ({ periodo: s.periodo, real: s.assentos })), ...linhas.map((l) => ({ periodo: l.periodo, base: l.a0, cenario: l.a1 }))] : [];
   const ptsT: Ponto[] = base ? [...base.serie.slice(-24).map((s) => ({ periodo: s.periodo, real: s.tarifa_real })), ...linhas.map((l) => ({ periodo: l.periodo, base: l.t0, cenario: l.t1 }))] : [];
 
-  const anom = aero.filter((x) => x.anomalo).sort((p, q) => q.escore_isolamento - p.escore_isolamento);
+  // cada detector marca os 2% de aeroportos-mês com maior escore (mesma taxa de alerta para todos)
+  const escore = (x: AeroMes) => (detector === 'isolamento' ? x.escore_isolamento : (x[`escore_${detector}` as keyof AeroMes] as number | null) ?? 0);
+  const temNovos = aero.some((x) => x.escore_lof != null);
+  const corte = useMemo(() => {
+    const v = aero.map(escore).sort((a, b) => a - b);
+    return v.length ? v[Math.floor(0.98 * (v.length - 1))] : Infinity;
+  }, [aero, detector]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ehAnom = (x: AeroMes) => (detector === 'isolamento' ? x.anomalo : escore(x) >= corte);
+  const anom = aero.filter(ehAnom).sort((p, q) => escore(q) - escore(p));
   const clip = (v: number) => Math.max(Math.min(v, Math.log(4)), Math.log(0.05));   // mostra entre -95% e +300%
   const pct = (v: number) => 100 * (Math.exp(clip(v)) - 1);
-  const serieAero = aero.filter((x) => x.icao === aeroGraf).map((x) => ({ periodo: x.periodo, rel: pct(x.rel_mov), anom: x.anomalo ? pct(x.rel_mov) : null }));
+  const serieAero = aero.filter((x) => x.icao === aeroGraf).map((x) => ({ periodo: x.periodo, rel: pct(x.rel_mov), anom: ehAnom(x) ? pct(x.rel_mov) : null }));
   const fmtRel = (v: number) => (v > Math.log(4) ? 'acima de +300%' : v < Math.log(0.05) ? 'abaixo de −95%' : fmtP(Math.exp(v) - 1, 0));
 
   return (
@@ -140,9 +153,17 @@ export default function PaginaDemanda() {
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="cartao">
               <div className="mb-1 font-semibold">Detector de anomalias: movimento do aeroporto em relação ao Brasil</div>
-              <select className="campo mb-2" value={aeroGraf} onChange={(e) => setAeroGraf(e.target.value)}>
-                {aeroportos.map((a) => <option key={a.icao} value={a.icao}>{a.nome}</option>)}
-              </select>
+              <div className="mb-2 flex flex-wrap gap-2">
+                <select className="campo" value={aeroGraf} onChange={(e) => setAeroGraf(e.target.value)}>
+                  {aeroportos.map((a) => <option key={a.icao} value={a.icao}>{a.nome}</option>)}
+                </select>
+                {temNovos && (
+                  <select className="campo" value={detector} onChange={(e) => setDetector(e.target.value as typeof detector)}>
+                    <option value="isolamento">Floresta de isolamento</option><option value="gmm">Mistura gaussiana (estatístico)</option>
+                    <option value="lof">LOF (densidade local)</option><option value="kmedias">Distância ao centroide (k-médias)</option>
+                  </select>
+                )}
+              </div>
               <div style={{ width: '100%', height: 260 }}>
                 <ResponsiveContainer><ComposedChart data={serieAero}>
                   <CartesianGrid stroke="var(--line)" vertical={false} /><XAxis dataKey="periodo" tickFormatter={fmtMes} minTickGap={28} tick={{ fontSize: 12 }} />
@@ -152,7 +173,8 @@ export default function PaginaDemanda() {
                   <Scatter dataKey="anom" name="Anomalia" fill="var(--warn)" />
                 </ComposedChart></ResponsiveContainer>
               </div>
-              <p className="nota">Eixo limitado entre −95% e +300%. Floresta de isolamento sobre quatro atributos (variação em 12 meses de assentos e tarifa, absoluta e relativa ao Brasil) dos 40 maiores aeroportos; 2% dos meses classificados como anômalos.</p>
+              <p className="nota">Eixo limitado entre −95% e +300%. Quatro atributos (variação em 12 meses de assentos e tarifa, absoluta e relativa ao Brasil) dos 40 maiores aeroportos;
+                cada detector marca os 2% de aeroportos-mês com maior escore. Os enfoques são os da Aula 6 (estatístico, densidade e clusterização); a floresta de isolamento é um extra.</p>
             </div>
             <div className="cartao max-h-[420px] overflow-auto">
               <div className="mb-2 font-semibold">Meses mais anômalos</div>
@@ -162,11 +184,63 @@ export default function PaginaDemanda() {
                   <tr key={x.icao + x.periodo} className="cursor-pointer hover:bg-soft" onClick={() => setAeroGraf(x.icao)}>
                     <td>{fmtMes(x.periodo)}</td><td>{x.aeroporto} <span className="text-muted">{x.cidade}</span></td>
                     <td className="text-right">{fmtRel(x.rel_mov)}</td><td className="text-right">{fmtRel(x.rel_tarifa)}</td>
-                    <td className="text-right">{fmtN(x.escore_isolamento, 2)}</td></tr>))}
+                    <td className="text-right">{fmtN(escore(x), 2)}</td></tr>))}
                 </tbody>
               </table>
             </div>
           </div>
+          {aval && (
+            <>
+              <h2 className="pt-4 text-[1.8rem]">Os detectores acertam os eventos conhecidos?</h2>
+              <p className="-mt-2 max-w-[78ch] text-muted">Rotulamos como evento a pandemia (todos os aeroportos, mar/2020 a dez/2021) e a enchente no RS (Porto Alegre, mai a out/2024):
+                {' '}{fmtN(aval.positivos)} de {fmtN(aval.n)} aeroportos-mês. Com esses rótulos dá para medir os detectores não supervisionados e treinar classificadores
+                supervisionados, como no Lab 6 (classes desbalanceadas, pesos inversos à frequência).</p>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="cartao overflow-x-auto">
+                  <h3 className="mb-2 text-[1.3rem]">Não supervisionados (alerta nos 2% maiores escores)</h3>
+                  <table className="tabela">
+                    <thead><tr><th>Detector</th><th className="text-right">Precisão</th><th className="text-right">Recall</th><th className="text-right">F1</th><th className="text-right">AUC</th></tr></thead>
+                    <tbody>{Object.values(aval.nao_supervisionado as Record<string, any>).sort((a: any, b: any) => b.auc - a.auc).map((d: any) => (
+                      <tr key={d.nome}><td>{d.nome}</td><td className="text-right">{fmtN(d.precisao, 2)}</td><td className="text-right">{fmtN(d.recall, 2)}</td>
+                        <td className="text-right">{fmtN(d.f1, 2)}</td><td className="text-right font-semibold">{fmtN(d.auc, 2)}</td></tr>))}</tbody>
+                  </table>
+                  <p className="nota mt-2">Com só 2% de alertas, o recall fica baixo por construção (há {fmtN(100 * aval.positivos / aval.n, 0)}% de eventos). A AUC, que não depende do corte,
+                    mostra quem ordena melhor os meses: aqui, {(Object.values(aval.nao_supervisionado) as any[]).sort((a, b) => b.auc - a.auc)[0].nome.toLowerCase()}.
+                    Mistura gaussiana com {aval.componentes_gmm} componentes (BIC); k-médias com k = {aval.k_kmedias} (silhueta).</p>
+                </div>
+                <div className="cartao">
+                  <h3 className="mb-1 text-[1.3rem]">Curvas ROC (não supervisionados)</h3>
+                  <CurvasROC curvas={Object.entries(aval.nao_supervisionado as Record<string, any>).map(([k, d]: [string, any], i) => ({
+                    nome: d.nome.split(' (')[0], cor: ['var(--sig)', 'var(--warn)', 'var(--azu)', 'var(--one)', 'var(--nom)'][i % 5], pontos: d.roc, auc: d.auc }))} />
+                </div>
+                <div className="cartao overflow-x-auto">
+                  <h3 className="mb-2 text-[1.3rem]">Supervisionados ({aval.divisao})</h3>
+                  <table className="tabela">
+                    <thead><tr><th>Classificador</th><th className="text-right">Acurácia</th><th className="text-right">Precisão</th><th className="text-right">Recall</th><th className="text-right">F1</th><th className="text-right">AUC</th></tr></thead>
+                    <tbody>{Object.entries(aval.supervisionado as Record<string, any>).map(([k, d]: [string, any]) => (
+                      <tr key={k} className={`cursor-pointer ${k === classif ? 'bg-soft' : ''}`} onClick={() => setClassif(k)}>
+                        <td>{d.nome}</td><td className="text-right">{fmtN(d.acuracia, 2)}</td><td className="text-right">{fmtN(d.precisao, 2)}</td>
+                        <td className="text-right">{fmtN(d.recall, 2)}</td><td className="text-right">{fmtN(d.f1, 2)}</td><td className="text-right font-semibold">{fmtN(d.auc, 2)}</td></tr>))}</tbody>
+                  </table>
+                  <p className="nota mt-2">Base de teste: {fmtN(aval.supervisionado.svm?.n ?? 0)} aeroportos-mês. A regressão logística traça uma fronteira linear e não separa bem um evento que aparece
+                    tanto como queda forte (2020) quanto como alta forte na comparação anual (2021); árvore e SVM com kernel radial capturam os dois lados. Hiperparâmetros por validação cruzada 5-fold
+                    (poda da árvore; kernel e C do SVM). Clique num classificador para ver a matriz de confusão.</p>
+                </div>
+                <div className="cartao">
+                  <h3 className="mb-2 text-[1.3rem]">Matriz de confusão · {aval.supervisionado[classif]?.nome}</h3>
+                  {aval.supervisionado[classif] && <MatrizConfusao m={aval.supervisionado[classif].matriz_confusao} />}
+                  <div className="mt-3">
+                    <CurvasROC altura={230} curvas={Object.entries(aval.supervisionado as Record<string, any>).map(([k, d]: [string, any], i) => ({
+                      nome: d.nome.split(' (')[0], cor: ['var(--sig)', 'var(--warn)', 'var(--azu)'][i % 3], pontos: d.roc, auc: d.auc }))} />
+                  </div>
+                  {aval.supervisionado.logistica?.coeficientes && (
+                    <p className="nota mt-1">Coeficientes da logística (atributos padronizados): {Object.entries(aval.supervisionado.logistica.coeficientes as Record<string, number>)
+                      .map(([k, v]) => `${k.replace('_', ' ')} ${fmtN(v, 2)}`).join('; ')}.</p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
